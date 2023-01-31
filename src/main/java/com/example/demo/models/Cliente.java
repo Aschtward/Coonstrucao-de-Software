@@ -1,6 +1,5 @@
 package com.example.demo.models;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,10 +26,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_USER")
-public class Cliente implements UserDetails, Serializable{
+public class Cliente implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy  = GenerationType.AUTO)
 	private Long id;
@@ -41,12 +40,15 @@ public class Cliente implements UserDetails, Serializable{
 	
 	@NotBlank
 	@Email
-	@Column
+	@Column(unique = true)
 	private String email;
 	
 	@NotBlank
 	@Column
 	private String password;
+	
+	@Column
+	private Boolean isConfirmed;
 	
 	@ManyToMany
 	@JoinTable(name = "TB_CLIENTE_ROLES",
@@ -54,30 +56,11 @@ public class Cliente implements UserDetails, Serializable{
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<RoleModel> roles;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	@Override
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
@@ -110,8 +93,51 @@ public class Cliente implements UserDetails, Serializable{
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return true;
+		return this.isConfirmed;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<RoleModel> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleModel> roles) {
+		this.roles = roles;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Boolean getIsConfirmed() {
+		return isConfirmed;
+	}
+
+	public void setIsConfirmed(Boolean isConfirmed) {
+		this.isConfirmed = isConfirmed;
 	}
 	
-
 }

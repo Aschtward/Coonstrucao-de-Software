@@ -14,7 +14,14 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http
-		.httpBasic().and().authorizeHttpRequests().anyRequest().authenticated().and().csrf().disable();
+		.httpBasic().and().authorizeHttpRequests()
+		.requestMatchers("/css/**").permitAll().
+		requestMatchers("/img/**").permitAll().
+		requestMatchers(HttpMethod.GET, "/confirmAccount**").permitAll().
+		requestMatchers(HttpMethod.GET, "/createaccount").permitAll().
+		requestMatchers(HttpMethod.GET,"/login").permitAll().
+		requestMatchers(HttpMethod.POST, "/createaccount").permitAll().anyRequest().authenticated()
+		.and().formLogin().loginPage("/login").usernameParameter("email").and().csrf().disable();
 		return http.build();
 	}
 	
