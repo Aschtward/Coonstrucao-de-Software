@@ -20,7 +20,7 @@
         <section class="contend">
             <h1>Sign in</h1>
             <p>Login to manage your account</p>
-            <form action="f" th:action = "@{login}" method="post">
+            <form action="f" th:action = "@{/loginPage}" method="post">
                  <div th:if="${param.error}" class="alert alert-error">    
                     Invalid username and password.
                 </div>

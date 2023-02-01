@@ -13,15 +13,35 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http
-		.httpBasic().and().authorizeHttpRequests()
-		.requestMatchers("/css/**").permitAll().
-		requestMatchers("/img/**").permitAll().
-		requestMatchers(HttpMethod.GET, "/confirmAccount**").permitAll().
-		requestMatchers(HttpMethod.GET, "/createaccount").permitAll().
-		requestMatchers(HttpMethod.GET,"/login").permitAll().
-		requestMatchers(HttpMethod.POST, "/createaccount").permitAll().anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").usernameParameter("email").and().csrf().disable();
+		 http.authorizeHttpRequests()
+		 .and()
+		 .authorizeHttpRequests()
+		 .requestMatchers("/css/**")
+		 .permitAll()
+		 .and()
+		 .authorizeHttpRequests()
+		 .requestMatchers("/img/**")
+		 .permitAll()
+		 .and()
+		 .authorizeHttpRequests()
+		 .requestMatchers("/createaccount")
+		 .permitAll()
+		 .and()
+		 .authorizeHttpRequests()
+		 .requestMatchers("/confirmAccount")
+		 .permitAll()
+         .anyRequest()
+         .authenticated()
+         .and()
+         .formLogin()
+         .loginPage("/loginPage")
+         .usernameParameter("email")
+         .permitAll()
+         .and()
+         .logout()
+         .permitAll()
+         .and()
+         .csrf().disable();
 		return http.build();
 	}
 	

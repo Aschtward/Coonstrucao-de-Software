@@ -35,7 +35,7 @@ public class ClientController {
 		return "/confirm";
 	}
 
-	@GetMapping("/login")
+	@RequestMapping("/loginPage")
 	public String login() {
 		return "login";
 	}

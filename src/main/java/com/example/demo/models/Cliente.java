@@ -75,7 +75,7 @@ public class Cliente implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return true;
+		return this.getIsConfirmed();
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class Cliente implements UserDetails{
 	}
 
 	public Boolean getIsConfirmed() {
-		return isConfirmed;
+		return true;
 	}
 
 	public void setIsConfirmed(Boolean isConfirmed) {

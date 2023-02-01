@@ -22,7 +22,7 @@ public class ClienteDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Cliente cliente = clienteRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-		return new User(cliente.getEmail(), cliente.getPassword(),true,true,true, true, cliente.getAuthorities());
+		return new User(cliente.getEmail(), cliente.getPassword(),cliente.isEnabled(),true,true, true, cliente.getAuthorities());
 	}
 
 }
