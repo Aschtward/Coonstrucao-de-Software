@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,41 +27,43 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_USER")
-public class Cliente implements UserDetails{
-	
+public class Cliente implements UserDetails {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy  = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NotBlank
 	@Column
 	private String name;
-	
+
 	@NotBlank
 	@Email
 	@Column(unique = true)
 	private String email;
-	
+
 	@NotBlank
 	@Column
 	private String password;
-	
+
 	@Column
 	private Boolean isConfirmed;
-	
+
 	@ManyToMany
-	@JoinTable(name = "TB_CLIENTE_ROLES",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "TB_CLIENTE_ROLES", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<RoleModel> roles;
+
+	@OneToOne
+	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
+	private Assinatura assinatura;
 
 	@Override
 	public String getPassword() {
 		return password;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
@@ -132,6 +135,14 @@ public class Cliente implements UserDetails{
 		this.password = password;
 	}
 
+	public Assinatura getAssinatura() {
+		return assinatura;
+	}
+
+	public void setAssinatura(Assinatura assinatura) {
+		this.assinatura = assinatura;
+	}
+
 	public Boolean getIsConfirmed() {
 		return isConfirmed;
 	}
@@ -139,5 +150,5 @@ public class Cliente implements UserDetails{
 	public void setIsConfirmed(Boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
 	}
-	
+
 }
