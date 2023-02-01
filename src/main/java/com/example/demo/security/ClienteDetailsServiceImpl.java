@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.models.Cliente;
+import com.example.demo.models.ClienteModels;
 import com.example.demo.repository.ClientRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ public class ClienteDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Cliente cliente = clienteRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		ClienteModels cliente = clienteRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 		return new User(cliente.getEmail(), cliente.getPassword(),cliente.isEnabled(),true,true, true, cliente.getAuthorities());
 	}
 

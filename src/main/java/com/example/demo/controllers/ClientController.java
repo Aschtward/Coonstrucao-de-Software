@@ -25,6 +25,7 @@ public class ClientController {
 	@PostMapping(value = "/createaccount")
 	public String adicionarCliente(@RequestParam String name, @RequestParam String email,
 			@RequestParam String password) {
+		System.out.println(email + password);
 		cDao.adicionarCliente(name, email, password);
 		return "/login";
 	}

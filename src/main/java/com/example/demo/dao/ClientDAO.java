@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.dto.EmailDto;
-import com.example.demo.models.Cliente;
+import com.example.demo.enums.RoleName;
+import com.example.demo.models.ClienteModels;
 import com.example.demo.models.ConfirmationTolkenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.ConfirmationTolkenRepository;
-import com.example.demo.security.ClienteDetailsServiceImpl;
 
 @Component
 public class ClientDAO{
@@ -23,11 +23,13 @@ public class ClientDAO{
 	ClientAdapter clientAdapter;
 	@Autowired
 	EmailDAO emailDao;
+	@Autowired
+	RolesDAO roleDao;
 	
-	public Cliente adicionarCliente( String name, String email, String password) {	
+	public ClienteModels adicionarCliente( String name, String email, String password) {	
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
-		Cliente cliente = clientAdapter.geraCliente(name, email, enconder.encode(password));
-		cliente.setIsConfirmed(false);
+		ClienteModels cliente = new ClienteModels(email, enconder.encode(password),
+				name, false, roleDao.buscarRoles(RoleName.ROLE_CLIENTE));
 		ConfirmationTolkenModel confirmationTolken = new ConfirmationTolkenModel(cliente);
 		clientRepo.save(cliente);
 		tolkenRepository.save(confirmationTolken);
@@ -41,7 +43,8 @@ public class ClientDAO{
 	public void confirmarEmail(String confirmationToken) {
 		ConfirmationTolkenModel token = tolkenRepository.findByConfirmationToken(confirmationToken);
 		if(token != null) {
-			Cliente cliente = clientRepo.findByEmail(token.getUser().getEmail()).get();
+			ClienteModels cliente = new ClienteModels();
+			clientAdapter.geraCliente(clientRepo.findByEmail(token.getUser().getEmail()), cliente);
 			cliente.setIsConfirmed(true);
 			clientRepo.save(cliente);
 		}

@@ -29,15 +29,15 @@ public class ConfirmationTolkenModel {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = Cliente.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = ClienteModels.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "cliente_id")
-    private Cliente user;
+    private ClienteModels user;
     
     public ConfirmationTolkenModel() {
  
 	}
 
-    public ConfirmationTolkenModel(Cliente user) {
+    public ConfirmationTolkenModel(ClienteModels user) {
     	this.user = user;
         createdDate =  new Date();
         confirmationToken = UUID.randomUUID().toString();
@@ -67,11 +67,11 @@ public class ConfirmationTolkenModel {
 		this.createdDate = createdDate;
 	}
 
-	public Cliente getUser() {
+	public ClienteModels getUser() {
 		return user;
 	}
 
-	public void setUser(Cliente user) {
+	public void setUser(ClienteModels user) {
 		this.user = user;
 	}
     
