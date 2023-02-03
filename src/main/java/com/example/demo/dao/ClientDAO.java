@@ -25,20 +25,16 @@ public class ClientDAO {
 	EmailDAO emailDao;
 
 	public Cliente adicionarCliente(String name, String email, String password) {
-		// BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
-		// Cliente cliente = clientAdapter.geraCliente(name, email,
-		// enconder.encode(password));
-		// cliente.setIsConfirmed(false);
-		// ConfirmationTolkenModel confirmationTolken = new
-		// ConfirmationTolkenModel(cliente);
-		// clientRepo.save(cliente);
-		// tolkenRepository.save(confirmationTolken);
-		// EmailDto emailConfirmation = new EmailDto("Apply & Growth",
-		// "applyandgrowth@gmail.com", cliente.getEmail(),
-		// "Confirmação de email", "Confirme o email no link:
-		// localhost:8080/confirmAccount?token="
-		// + confirmationTolken.getConfirmationToken());
-		// emailDao.sendingEmail(emailConfirmation);
+		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
+		Cliente cliente = clientAdapter.geraCliente(name, email, enconder.encode(password));
+		cliente.setIsConfirmed(false);
+		ConfirmationTolkenModel confirmationTolken = new ConfirmationTolkenModel(cliente);
+		clientRepo.save(cliente);
+		tolkenRepository.save(confirmationTolken);
+		EmailDto emailConfirmation = new EmailDto("Apply & Growth", "applyandgrowth@gmail.com", cliente.getEmail(),
+				"Confirmação de email", "Confirme o email no link: localhost:8080/confirmAccount?token="
+						+ confirmationTolken.getConfirmationToken());
+		emailDao.sendingEmail(emailConfirmation);
 		return null;
 	}
 
@@ -56,7 +52,7 @@ public class ClientDAO {
 		return cliente;
 	}
 
-	public void salverCliente(Cliente c) {
+	public void salvarCliente(Cliente c) {
 		clientRepo.save(c);
 	}
 }

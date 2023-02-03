@@ -19,7 +19,7 @@ public class SubscriptionController {
 
     @PostMapping("/subscription")
     private String validarAssinatura() {
-        //
+        aDao.getCliente();
         return "/index";
     }
 }

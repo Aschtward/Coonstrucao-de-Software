@@ -30,7 +30,7 @@ public class AssinaturaDAO {
             Cliente aux = cDao.buscaCliente(email);
             aux.setRoles(rDao.buscarRoles());
             aux.setAssinatura(ass);
-            cDao.salverCliente(aux);
+            cDao.salvarCliente(aux);
             aRepo.save(ass);
         }
     }
