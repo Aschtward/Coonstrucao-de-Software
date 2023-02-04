@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 import com.example.demo.enums.StatusEmail;
 
-import lombok.Data;
 
-@Data
+
+
 public class EmailModel {
-	
-private static final long serialVersionUID= 1L;
+
+	private static final long serialVersionUID= 1L;
 	
 	private Long emailId;
 	private String ownerRef;
@@ -71,5 +71,6 @@ private static final long serialVersionUID= 1L;
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
+	
 }

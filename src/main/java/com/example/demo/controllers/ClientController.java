@@ -2,8 +2,8 @@ package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,21 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.ClientDAO;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+
 @Controller
+@Validated
 public class ClientController {
 
 	@Autowired
 	ClientDAO cDao;
 
-	@GetMapping(value = "/createaccount")
-	public String getPage() {
-		return "/create_account";
-	}
-
 	@PostMapping(value = "/createaccount")
-	public String adicionarCliente(@RequestParam String name, @RequestParam String email,
-			@RequestParam String password) {
-		System.out.println(email + password);
+	public String adicionarCliente(@Valid @RequestParam String name,@Valid @Email @RequestParam String email,
+			@Valid @Min(6) @RequestParam String password, Model model) {
 		cDao.adicionarCliente(name, email, password);
 		return "/login";
 	}
@@ -35,10 +34,12 @@ public class ClientController {
 		cDao.confirmarEmail(confirmationToken);
 		return "/confirm";
 	}
-
-	@RequestMapping("/loginPage")
-	public String login() {
+	
+	@PostMapping("/forgotPassword")
+	public String enviarLinkRecuperarSenha(@RequestParam String email) {
+		cDao.sendRecoveryToken(email);
 		return "login";
 	}
-
+	
+	
 }

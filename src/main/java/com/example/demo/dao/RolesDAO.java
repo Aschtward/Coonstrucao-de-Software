@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.enums.RoleName;
@@ -11,18 +12,8 @@ import com.example.demo.repository.RoleRepository;
 @Component
 public class RolesDAO {
 	
-	final RoleRepository roleRepository;
-
-	public RolesDAO(RoleRepository roleRepository) {
-		super();
-		this.roleRepository = roleRepository;
-		RoleModel client = new RoleModel();
-		client.setRoleName(RoleName.ROLE_CLIENTE);
-		RoleModel anunciante = new RoleModel();
-		anunciante.setRoleName(RoleName.ROLE_ANUNCIANTE);
-		roleRepository.save(client);
-		roleRepository.save(anunciante);
-	}
+	@Autowired
+	RoleRepository roleRepository;
 	
 	public List<RoleModel> buscarAllRoles(){
 		return roleRepository.findAll();

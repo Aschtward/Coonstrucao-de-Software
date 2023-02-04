@@ -16,10 +16,10 @@
     </header>
     <main>
         <section class="contend">
-           <h1>Recover Password</h1>
-           <form action = "#" th:action="@{/forgotPassword}" method="post">
-              Email:<input class="mail" type="text" placeholder="Email" name = "email">
-              <p>A recovery link will be sent via email</p>
+           <h1>Digite a nova senha</h1>
+           <form action = "#" th:action="@{/changePassword}" method="post">
+           			<input type="hidden" name="token" th:value="${token}" />
+              Password:<input class="password" type="password" placeholder="password" name = "password">
               <button type="submit">Submit</button>
            </form>
         </section>

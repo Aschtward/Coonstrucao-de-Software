@@ -1,8 +1,8 @@
 package com.example.demo.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,59 +12,54 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-public class ConfirmationTolkenModel {
-
+@Table(name = "tb_passwordtoken")
+public class TokenModel {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="token_id")
     private long tokenid;
 
-    @Column(name="confirmation_token")
-    private String confirmationToken;
+    @Column(name="recovery_token")
+    private String recoveryToken;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @Column
+    private LocalDate endDate;
 
     @OneToOne(targetEntity = ClienteModels.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "cliente_id")
     private ClienteModels user;
-    
-    public ConfirmationTolkenModel() {
- 
+
+	public TokenModel(ClienteModels user) {
+		super();
+		this.recoveryToken = UUID.randomUUID().toString();
+		this.endDate = LocalDate.now().plusDays(1);
+		this.user = user;
+	}
+	
+	public TokenModel() {
+		
 	}
 
-    public ConfirmationTolkenModel(ClienteModels user) {
-    	this.user = user;
-        createdDate =  new Date();
-        confirmationToken = UUID.randomUUID().toString();
+	public String getRecoveryToken() {
+		return recoveryToken;
 	}
 
-	public long getTokenid() {
-		return tokenid;
+	public void setRecoveryToken(String recoveryToken) {
+		this.recoveryToken = recoveryToken;
 	}
 
-	public void setTokenid(long tokenid) {
-		this.tokenid = tokenid;
+	public LocalDate getCreatedDate() {
+		return endDate;
 	}
 
-	public String getConfirmationToken() {
-		return confirmationToken;
-	}
-
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setCreatedDate(LocalDate createdDate) {
+		this.endDate = createdDate;
 	}
 
 	public ClienteModels getUser() {
@@ -74,6 +69,5 @@ public class ConfirmationTolkenModel {
 	public void setUser(ClienteModels user) {
 		this.user = user;
 	}
-    
-    
+	
 }

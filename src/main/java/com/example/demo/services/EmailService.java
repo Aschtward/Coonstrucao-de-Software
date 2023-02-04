@@ -13,12 +13,12 @@ import com.example.demo.models.EmailModel;
 
 @Service
 public class EmailService {
-
+	
 	@Autowired
 	private JavaMailSender emailSender;
 
 	public void sendEmail(EmailModel emailModel) {
-
+		
 		emailModel.setSendDateEmail(LocalDateTime.now());
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -28,10 +28,10 @@ public class EmailService {
 			message.setText(emailModel.getText());
 			emailSender.send(message);
 			emailModel.setStatusEmail(StatusEmail.SENT);
-		} catch (MailException e) {
+		}catch(MailException e) {
 			emailModel.setStatusEmail(StatusEmail.ERROR);
+			e.printStackTrace();
 		}
-
+		
 	}
-
 }

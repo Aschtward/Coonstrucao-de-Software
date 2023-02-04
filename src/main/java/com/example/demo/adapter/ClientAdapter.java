@@ -1,9 +1,11 @@
 package com.example.demo.adapter;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
+import com.example.demo.models.Assinatura;
 import com.example.demo.models.ClienteModels;
 
 @Component

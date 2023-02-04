@@ -14,9 +14,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +38,9 @@ public class ClienteModels implements UserDetails{
 	
 	@NotBlank
 	@Column(unique  = true)
+	@Email
 	protected String email;
+	
 	@NotBlank
 	@Column
 	protected String password;
@@ -47,6 +51,10 @@ public class ClienteModels implements UserDetails{
 	
 	@Column
 	private Boolean isConfirmed;
+	
+	@OneToOne
+	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
+	private Assinatura assinatura;
 
 	public ClienteModels(@NotBlank String email, @NotBlank String password, @NotBlank String name, Boolean isConfirmed,
 			List<RoleModel> roles) {
@@ -145,11 +153,25 @@ public class ClienteModels implements UserDetails{
 	}
 
 	public Boolean getIsConfirmed() {
-		return true;
+		return this.isConfirmed;
 	}
 
 	public void setIsConfirmed(Boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
 	}
+
+	public Assinatura getAssinatura() {
+		return assinatura;
+	}
+
+	public void setAssinatura(Assinatura assinatura) {
+		this.assinatura = assinatura;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 	
 }
