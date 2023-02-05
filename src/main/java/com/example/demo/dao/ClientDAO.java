@@ -14,8 +14,8 @@ import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
 
 @Component
-public class ClientDAO{
-	
+public class ClientDAO {
+
 	@Autowired
 	ClientRepository clientRepo;
 	@Autowired
@@ -30,6 +30,7 @@ public class ClientDAO{
 	TokenDAO tokenDao;
 	
 	public ClienteModels adicionarCliente( String name, String email, String password) {	
+
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
 		
 		ClienteModels cliente = new ClienteModels(email,
@@ -44,7 +45,7 @@ public class ClientDAO{
 		tokenRepo.save(confirmationTolken);
 		return cliente;
 	}
-	
+
 	public void confirmarEmail(String confirmationToken) {
 		TokenModel token = tokenRepo.findByRecoveryToken(confirmationToken);
 		if(token != null) {
@@ -86,5 +87,12 @@ public class ClientDAO{
 		return clientRepo.findByEmail(email).get();
 	}
 
+	public Cliente buscaCliente(String email) {
+		Cliente cliente = clientRepo.findByEmail(email).get();
+		return cliente;
+	}
 
+	public void salvarCliente(Cliente c) {
+		clientRepo.save(c);
+	}
 }

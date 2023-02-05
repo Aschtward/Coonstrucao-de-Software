@@ -71,16 +71,18 @@ public class ClienteModels implements UserDetails{
 	}
 
 	@ManyToMany
-	@JoinTable(name = "TB_CLIENTE_ROLES",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "TB_CLIENTE_ROLES", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<RoleModel> roles;
+
+	@OneToOne
+	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
+	private Assinatura assinatura;
 
 	@Override
 	public String getPassword() {
 		return password;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
@@ -152,6 +154,14 @@ public class ClienteModels implements UserDetails{
 		this.password = password;
 	}
 
+	public Assinatura getAssinatura() {
+		return assinatura;
+	}
+
+	public void setAssinatura(Assinatura assinatura) {
+		this.assinatura = assinatura;
+	}
+
 	public Boolean getIsConfirmed() {
 		return this.isConfirmed;
 	}
@@ -171,7 +181,5 @@ public class ClienteModels implements UserDetails{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 	
 }

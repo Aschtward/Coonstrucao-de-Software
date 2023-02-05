@@ -11,7 +11,6 @@ import com.example.demo.repository.RoleRepository;
 
 @Component
 public class RolesDAO {
-	
 	@Autowired
 	RoleRepository roleRepository;
 	
@@ -21,6 +20,4 @@ public class RolesDAO {
 	public List<RoleModel> buscarRoles(RoleName roleName){
 		return roleRepository.findByRoleName(roleName);
 	}
-	
-	
 }
