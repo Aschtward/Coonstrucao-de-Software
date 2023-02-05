@@ -37,12 +37,16 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+		<dependency>  <!-- Ative essa dependência caso esteja usando MariaDB -->
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- <dependency> Ative essa dependência caso esteja usando MySql -->
+		<!-- 	<groupId>com.mysql</groupId> -->
+		<!-- 	<artifactId>mysql-connector-j</artifactId> -->
+		<!-- 	<scope>runtime</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

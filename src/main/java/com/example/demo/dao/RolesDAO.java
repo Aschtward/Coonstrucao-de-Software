@@ -6,8 +6,11 @@ import com.example.demo.enums.RoleName;
 import com.example.demo.models.RoleModel;
 import com.example.demo.repository.RoleRepository;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class RolesDAO {
-	
+
 	final RoleRepository roleRepository;
 
 	public RolesDAO(RoleRepository roleRepository) {
@@ -20,10 +23,9 @@ public class RolesDAO {
 		roleRepository.save(client);
 		roleRepository.save(anunciante);
 	}
-	
-	public List<RoleModel> buscarRoles(){
+
+	public List<RoleModel> buscarRoles() {
 		return roleRepository.findAll();
 	}
-	
-	
+
 }
