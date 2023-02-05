@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - A&G</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/create_account.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <section class="contend1">
+            <img src="img/icon/logo_white.png">
+            <h1>Welcome to <br>Apply and Growth</h1>
+            <p>Apply & Grow is a software aimed at the control and monitoring 
+               of diets, followed by an e-shop platform that facilitates all 
+               the logistics of staying focused without having to worry about 
+               where to buy what you need, receiving any product at your home.
+            </p>
+        </section>
+    </header>
+    <main>
+        <section class="box-create">
+            <img class="set" src="img/icon/set.png">
+            <div class="contend">
+               <div class="partition1">
+                 <h2>Create your Account</h2>
+                 <p>Created for Developers by UEM</p>
+               </div>
+               <form action = "#" th:action="@{/createaccount}" method="post">
+               
+                  Name: <input  type="text" placeholder="Full Name" name ="name">
+                  Email: <input  type="text" placeholder="Email" name = "email">
+                  Password: <input  type="text" placeholder="Password" name = "password">
+                  
+                  <input type="password" placeholder="Chose your account type">
+                  <div class="custom-checkbox">
+                     <input id="checkbox1" type="checkbox">
+                     <label for="checkbox1">I agree to the Terms and Conditions</label>
+                  </div>
+                    <button type="submit">Create my account</button>
+                </form:form>
+                
+                <div class="sign-up">
+                    <p>Alredy have an account ? <a th:href= "@{/login}">Sign In</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</body>
+</html>
