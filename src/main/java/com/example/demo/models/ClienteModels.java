@@ -56,6 +56,9 @@ public class ClienteModels implements UserDetails{
 	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
 	private Assinatura assinatura;
 
+//	@OneToOne(mappedBy = "cliente")
+//	private Agenda agenda;
+
 	public ClienteModels(@NotBlank String email, @NotBlank String password, @NotBlank String name, Boolean isConfirmed,
 			List<RoleModel> roles) {
 		super();

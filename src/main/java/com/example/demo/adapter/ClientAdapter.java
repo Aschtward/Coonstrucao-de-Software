@@ -1,12 +1,9 @@
 package com.example.demo.adapter;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
+import com.example.demo.models.ClienteModels;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.models.Assinatura;
-import com.example.demo.models.ClienteModels;
+import java.util.Optional;
 
 @Component
 public class ClientAdapter {
