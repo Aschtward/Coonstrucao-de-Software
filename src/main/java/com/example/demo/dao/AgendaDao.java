@@ -46,7 +46,13 @@ public class AgendaDao {
     public void deleteAtividade(Integer atividadeId, Integer agendaId) {
         Agenda agenda = getAgenda(agendaId);
         List<Atividades> atividadesList = getAtividades(agendaId);
-        atividadesList.remove(atividadesRepository.findById())
+        atividadesList.remove(atividadesRepository.findById(atividadeId.longValue()).get());
         atividadesRepository.deleteById(atividadeId.longValue());
+        agenda.setAtividades(atividadesList);
+        addAgenda(agenda);
+    }
+
+    public void updateAtividade(Atividades atividades) {
+        atividadesRepository.save(atividades);
     }
 }
