@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,26 @@ public class ClientController {
 	public String enviarLinkRecuperarSenha(@RequestParam String email) {
 		cDao.sendRecoveryToken(email);
 		return "login";
+	}
+	
+	@GetMapping(value = "/createaccount")
+	public String getPage() {
+		return "/create_account";
+	}
+	
+	@RequestMapping("/loginPage")
+	public String login() {
+		return "login";
+	}
+	
+	@RequestMapping("/errorToken")
+	public String tokenInvalido() {
+		return "/tokenInvalido";
+	}
+	
+	@GetMapping("/forgotPassword")
+	public String forgotPassworView() {
+		return "/recover_password";
 	}
 	
 	
