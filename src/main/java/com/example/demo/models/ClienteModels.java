@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -52,6 +54,18 @@ public class ClienteModels implements UserDetails{
 	@Column
 	private Boolean isConfirmed;
 	
+	@OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+	@JoinTable(name = "TB_CLIENTE_ANUNCIO",
+	joinColumns = @JoinColumn(name = "user_id"),
+	inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
+	private List<AnuncioModel> anuncio;
+	
+	@OneToMany
+	@JoinTable(name = "TB_CLIENTE_PRODUTO",
+	joinColumns = @JoinColumn(name = "user_id"),
+	inverseJoinColumns = @JoinColumn(name = "produto_id"))
+	private List<ProdutoModel> carrinho;
+	
 	@OneToOne
 	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
 	private Assinatura assinatura;
@@ -84,6 +98,15 @@ public class ClienteModels implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
+	}
+	
+
+	public List<ProdutoModel> getCarrinho() {
+		return carrinho;
+	}
+
+	public void setCarrinho(List<ProdutoModel> carrinho) {
+		this.carrinho = carrinho;
 	}
 
 	@Override
@@ -171,7 +194,13 @@ public class ClienteModels implements UserDetails{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+
+	public List<AnuncioModel> getAnuncio() {
+		return anuncio;
+	}
+
+	public void setAnuncio(List<AnuncioModel> anuncio) {
+		this.anuncio = anuncio;
+	}
 	
 }
