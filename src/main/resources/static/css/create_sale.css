@@ -55,6 +55,12 @@ span{
     font-size: 16px;
 }
 
+.custom-label{
+ 	color: white;
+    font-size: 24px;
+    padding-bottom: 10px;
+}
+
 .input2{
     width: 452px;
     height: 300px;
@@ -127,14 +133,14 @@ button:hover{
 
 .group1{
     position: absolute;
-    left: 50px;
-    top: 120px;
+    left: 200px;
+    top: 300px;
 }
 
 .group2{
     position: absolute;
-    left: 600px;
-    top: 120px;
+    left: 1000px;
+    top: 500px;
 }
 
 .group2 form{
@@ -148,7 +154,7 @@ button:hover{
 }
 
 .group2 p{
-    margin-right: 20px;
+    margin-right: 200px;
 }
 
 .input4, .input5{
@@ -197,13 +203,9 @@ button:hover{
         border-radius: 8px;
         color: white;
         font-size: 20px;
-        margin-top: 25px;
         cursor: pointer;
         transition: .3s;
-        margin-bottom: 20px;
         position: absolute;
-        bottom: 50px;
-        right: 150px;
 }
 
 .marcation{

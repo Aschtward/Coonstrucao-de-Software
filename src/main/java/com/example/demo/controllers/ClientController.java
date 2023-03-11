@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.ClientDAO;
+import com.example.demo.models.ClienteModels;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 
 @Controller
-@Validated
 public class ClientController {
 
 	@Autowired
@@ -44,7 +44,7 @@ public class ClientController {
 	
 	@GetMapping(value = "/createaccount")
 	public String getPage() {
-		return "/create_account";
+		return "/criar_conta";
 	}
 	
 	@RequestMapping("/loginPage")
