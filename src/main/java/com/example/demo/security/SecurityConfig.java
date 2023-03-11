@@ -47,7 +47,10 @@ public class SecurityConfig {
          .defaultSuccessUrl("/")
          .and()
          .logout()
-         .permitAll()
+         .logoutUrl("/logout")
+         .logoutSuccessUrl("/loginPage")
+         .clearAuthentication(true)
+         .invalidateHttpSession(true)
          .and()
          .csrf().disable();
 		return http.build();
