@@ -63,6 +63,7 @@ public class AnuncioDAO {
 			anuncio.setPreco(price);
 			anuncio.setDescricao(descricao);
 			anuncio.setVendas(0);
+			anuncio.setNotaTotal(0);
 			String imageId = UUID.randomUUID().toString();
 			anuncio.setImage(imageId);
 			byte[] bytesDaImagem = image.getBytes();

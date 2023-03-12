@@ -54,17 +54,17 @@ public class ClienteModels implements UserDetails{
 	@Column
 	private Boolean isConfirmed;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "TB_CLIENTE_ANUNCIO",
 	joinColumns = @JoinColumn(name = "user_id"),
 	inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
 	private List<AnuncioModel> anuncio;
 	
 	@OneToMany
-	@JoinTable(name = "TB_CLIENTE_PRODUTO",
+	@JoinTable(name = "TB_CLIENTE_COMPRAS",
 	joinColumns = @JoinColumn(name = "user_id"),
 	inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private List<ProdutoModel> carrinho;
+	private List<ProdutoCompradoModel> compras;
 	
 	@OneToOne
 	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
@@ -101,12 +101,12 @@ public class ClienteModels implements UserDetails{
 	}
 	
 
-	public List<ProdutoModel> getCarrinho() {
-		return carrinho;
+	public List<ProdutoCompradoModel> getCarrinho() {
+		return compras;
 	}
 
-	public void setCarrinho(List<ProdutoModel> carrinho) {
-		this.carrinho = carrinho;
+	public void setCarrinho(List<ProdutoCompradoModel> carrinho) {
+		this.compras = carrinho;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.models.AnuncioModel;
-import com.example.demo.models.ProdutoModel;
+import com.example.demo.models.ProdutoCompradoModel;
 
 @Component
 public class ProdutoDAO {
@@ -21,7 +21,7 @@ public class ProdutoDAO {
 		Optional<AnuncioModel> anuncioReferente = anuncioDao.buscarAnuncio(idProduto);
 		if(anuncioReferente.isPresent()) {
 			AnuncioModel produtoAnuncio = anuncioReferente.get();
-			ProdutoModel produto  = new ProdutoModel();
+			ProdutoCompradoModel produto  = new ProdutoCompradoModel();
 			produto.setAnuncio(produtoAnuncio);
 			produto.setQuantidade(quantidade);
 			produto.setTotal(produtoAnuncio.getPreco().multiply(new BigDecimal(quantidade)));

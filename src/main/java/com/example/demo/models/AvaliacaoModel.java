@@ -22,4 +22,23 @@ public class AvaliacaoModel {
 	@Column
 	private int nota;
 	
+	public ClienteModels getCliente() {
+		return cliente;
+	}
+	public void setCliente(ClienteModels cliente) {
+		this.cliente = cliente;
+	}
+	public String getAvaliacao() {
+		return avaliacao;
+	}
+	public void setAvaliacao(String avaliacao) {
+		this.avaliacao = avaliacao;
+	}
+	public int getNota() {
+		return nota;
+	}
+	public void setNota(int nota) {
+		this.nota = nota;
+	}
+	
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.enums.RoleName;
 import com.example.demo.models.ClienteModels;
-import com.example.demo.models.ProdutoModel;
+import com.example.demo.models.ProdutoCompradoModel;
 import com.example.demo.models.TokenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
@@ -33,7 +33,7 @@ public class ClientDAO {
 	@Autowired
 	TokenDAO tokenDao;
 	
-	public void adicionarProdutoCarrinho(ProdutoModel produto) {
+	public void adicionarProdutoCarrinho(ProdutoCompradoModel produto) {
 		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (cliente instanceof UserDetails) {
         	String email = ((UserDetails) cliente).getUsername();
@@ -91,6 +91,16 @@ public class ClientDAO {
 	public void salvarCliente(ClienteModels aux) {
 		clientRepo.save(aux);
 
+	}
+	
+	public ClienteModels buscarSessaoCliente() {
+		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (cliente instanceof UserDetails) {
+        	String email = ((UserDetails) cliente).getUsername();
+        	ClienteModels clienteAtual = buscaCliente(email);
+        	return clienteAtual;
+        }
+        return null;
 	}
 
 	public ClienteModels buscaCliente(String email) {
