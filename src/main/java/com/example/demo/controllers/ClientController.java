@@ -29,6 +29,7 @@ public class ClientController {
 		cDao.adicionarCliente(name, email, password);
 		return "/login";
 	}
+	
 
 	@RequestMapping(value = "/confirmAccount", method = { RequestMethod.GET, RequestMethod.POST })
 	public String confirmarConta(@RequestParam("token") String confirmationToken) {

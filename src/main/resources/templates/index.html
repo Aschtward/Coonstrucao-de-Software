@@ -365,11 +365,14 @@
 					var itemLista = document.createElement('li');
 					itemLista.classList.add('list-group-item');
 					itemLista.innerHTML = `
-    <div style="text-align:center;">
-      <img src="img/prodImages/${produto.img}.jpg"  style = "width:100px;height:100px; object-fit:contain;margin:auto;"alt="${produto.nome}">
-      <h5>${produto.nome}</h5>
-      <span class="badge badge-primary badge-pill">${produto.quantidade}</span>
-      <p>R$ ${produto.preco.toFixed(2)}</p>
+    <div class = "row" style="text-align:left;">
+    	<div class  = "col-6">
+      		<img src="img/prodImages/${produto.img}.jpg"  style = "width:100px;height:100px; object-fit:contain;margin:auto;"alt="${produto.nome}">
+     	 </div>
+      	 <div class = "col-6">
+      		<h5>${produto.nome} <span class="badge badge-primary badge-pill">${produto.quantidade}</span></h5>
+      		<p>R$ ${produto.preco.toFixed(2)}</p>
+      	</div>
     </div>
   `;
 					listaProdutos.appendChild(itemLista);

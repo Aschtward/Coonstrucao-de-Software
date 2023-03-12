@@ -22,5 +22,11 @@ public class RolesDAO {
 		return roleRepository.findByRoleName(roleName);
 	}
 	
+	public void inserirRole(RoleName role) {
+		RoleModel roleModel = new RoleModel();
+		roleModel.setRoleName(role);
+		roleRepository.save(roleModel);
+	}
+	
 	
 }

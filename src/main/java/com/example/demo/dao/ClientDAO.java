@@ -45,6 +45,11 @@ public class ClientDAO {
 
 	public ClienteModels adicionarCliente(String name, String email, String password) {
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
+		
+		if(roleDao.buscarAllRoles().isEmpty()) {
+			roleDao.inserirRole(RoleName.ROLE_CLIENTE);
+			roleDao.inserirRole(RoleName.ROLE_ANUNCIANTE);
+		}
 
 		ClienteModels cliente = new ClienteModels(email, enconder.encode(password), name, false,
 				roleDao.buscarRoles(RoleName.ROLE_CLIENTE));
