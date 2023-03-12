@@ -1,0 +1,14 @@
+
+body {
+  background: rgb(255, 255, 255);
+}
+
+.custom-text{
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.borda{
+	border: 2px rgb(192, 192, 192) solid;
+	border-radius: 20px;
+}
