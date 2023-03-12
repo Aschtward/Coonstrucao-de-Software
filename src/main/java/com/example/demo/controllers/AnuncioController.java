@@ -23,10 +23,6 @@ public class AnuncioController {
 	@Autowired
 	AnuncioDAO anuncioDao;
 	
-	@GetMapping("/cadastrarAnuncio")
-	public String novoAnuncio() {
-		return "create_sale";
-	}
 	
 	@PostMapping("/cadastrarAnuncio")
 	public String cadastrarAnuncio(@RequestParam String preco, @RequestParam String nome,@RequestParam String descricao, @RequestParam MultipartFile imagem) {
