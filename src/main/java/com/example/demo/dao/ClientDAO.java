@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.enums.RoleName;
 import com.example.demo.models.ClienteModels;
-import com.example.demo.models.ProdutoModel;
+import com.example.demo.models.ProdutoCompradoModel;
 import com.example.demo.models.TokenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
@@ -33,18 +33,14 @@ public class ClientDAO {
 	@Autowired
 	TokenDAO tokenDao;
 	
-	public void adicionarProdutoCarrinho(ProdutoModel produto) {
-		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (cliente instanceof UserDetails) {
-        	String email = ((UserDetails) cliente).getUsername();
-        	ClienteModels clienteCarrinho = buscaCliente(email);
-        	clienteCarrinho.getCarrinho().add(produto);
-        	salvarCliente(clienteCarrinho);
-        }
-	}
 
 	public ClienteModels adicionarCliente(String name, String email, String password) {
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
+		
+		if(roleDao.buscarAllRoles().isEmpty()) {
+			roleDao.inserirRole(RoleName.ROLE_CLIENTE);
+			roleDao.inserirRole(RoleName.ROLE_ANUNCIANTE);
+		}
 
 		ClienteModels cliente = new ClienteModels(email, enconder.encode(password), name, false,
 				roleDao.buscarRoles(RoleName.ROLE_CLIENTE));
@@ -91,6 +87,16 @@ public class ClientDAO {
 	public void salvarCliente(ClienteModels aux) {
 		clientRepo.save(aux);
 
+	}
+	
+	public ClienteModels buscarSessaoCliente() {
+		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (cliente instanceof UserDetails) {
+        	String email = ((UserDetails) cliente).getUsername();
+        	ClienteModels clienteAtual = buscaCliente(email);
+        	return clienteAtual;
+        }
+        return null;
 	}
 
 	public ClienteModels buscaCliente(String email) {

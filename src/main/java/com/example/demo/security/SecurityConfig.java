@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
 @Configuration
 public class SecurityConfig {
@@ -31,6 +33,10 @@ public class SecurityConfig {
 		 .permitAll()
 		 .and()
 		 .authorizeHttpRequests()
+		 .requestMatchers("/script/**")
+		 .permitAll()
+		 .and()
+		 .authorizeHttpRequests()
 		 .requestMatchers("/img/**")
 		 .permitAll()
 		 .and()
@@ -47,7 +53,10 @@ public class SecurityConfig {
          .defaultSuccessUrl("/")
          .and()
          .logout()
-         .permitAll()
+         .logoutUrl("/logout")
+         .logoutSuccessUrl("/loginPage")
+         .clearAuthentication(true)
+         .invalidateHttpSession(true)
          .and()
          .csrf().disable();
 		return http.build();

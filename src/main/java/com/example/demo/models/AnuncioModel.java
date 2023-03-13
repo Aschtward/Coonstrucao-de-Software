@@ -34,9 +34,18 @@ public class AnuncioModel {
 	@OneToMany
 	@JoinColumn(name = "avaliacao_id")
 	private List<AvaliacaoModel> avaliacao;
+	@Column
+	private int notaTotal;
 	
 	
-	
+	public int getNotaTotal() {
+		return notaTotal;
+	}
+
+	public void setNotaTotal(int notaTotal) {
+		this.notaTotal = notaTotal;
+	}
+
 	public List<AvaliacaoModel> getAvaliacao() {
 		return avaliacao;
 	}

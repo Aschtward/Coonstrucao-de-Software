@@ -20,7 +20,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,17 +53,17 @@ public class ClienteModels implements UserDetails{
 	@Column
 	private Boolean isConfirmed;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "TB_CLIENTE_ANUNCIO",
 	joinColumns = @JoinColumn(name = "user_id"),
 	inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
 	private List<AnuncioModel> anuncio;
 	
-	@OneToMany
-	@JoinTable(name = "TB_CLIENTE_PRODUTO",
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "TB_CLIENTE_ENDERECO",
 	joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private List<ProdutoModel> carrinho;
+	inverseJoinColumns = @JoinColumn(name = "endereco_id"))
+	private List<EnderecoModel> endereco;
 	
 	@OneToOne
 	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
@@ -98,15 +97,6 @@ public class ClienteModels implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
-	}
-	
-
-	public List<ProdutoModel> getCarrinho() {
-		return carrinho;
-	}
-
-	public void setCarrinho(List<ProdutoModel> carrinho) {
-		this.carrinho = carrinho;
 	}
 
 	@Override
@@ -201,6 +191,14 @@ public class ClienteModels implements UserDetails{
 
 	public void setAnuncio(List<AnuncioModel> anuncio) {
 		this.anuncio = anuncio;
+	}
+
+	public List<EnderecoModel> getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(List<EnderecoModel> endereco) {
+		this.endereco = endereco;
 	}
 	
 }
