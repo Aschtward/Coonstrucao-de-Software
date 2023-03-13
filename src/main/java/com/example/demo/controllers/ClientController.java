@@ -38,11 +38,6 @@ public class ClientController {
 		return "/confirm";
 	}
 	
-	@PostMapping("/forgotPassword")
-	public String enviarLinkRecuperarSenha(@RequestParam String email) {
-		cDao.sendRecoveryToken(email);
-		return "login";
-	}
 	
 	@GetMapping(value = "/createaccount")
 	public String getPage() {

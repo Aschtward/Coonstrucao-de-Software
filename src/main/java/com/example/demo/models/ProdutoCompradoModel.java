@@ -31,6 +31,9 @@ public class ProdutoCompradoModel {
 	@OneToOne
 	@JoinColumn(name="vendedor_id")
 	private ClienteModels vendedor;
+	@OneToOne
+	@JoinColumn(name="endereco_id")
+	private EnderecoModel endereco;
 	
 	
 	
@@ -64,4 +67,12 @@ public class ProdutoCompradoModel {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+	public EnderecoModel getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(EnderecoModel endereco) {
+		this.endereco = endereco;
+	}
+	
+	
 }
