@@ -60,12 +60,6 @@ public class ClienteModels implements UserDetails{
 	inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
 	private List<AnuncioModel> anuncio;
 	
-	@OneToMany
-	@JoinTable(name = "TB_CLIENTE_COMPRAS",
-	joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private List<ProdutoCompradoModel> compras;
-	
 	@OneToOne
 	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
 	private Assinatura assinatura;
@@ -98,15 +92,6 @@ public class ClienteModels implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
-	}
-	
-
-	public List<ProdutoCompradoModel> getCarrinho() {
-		return compras;
-	}
-
-	public void setCarrinho(List<ProdutoCompradoModel> carrinho) {
-		this.compras = carrinho;
 	}
 
 	@Override

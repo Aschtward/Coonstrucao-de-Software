@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class ProdutoCompradoModel {
@@ -22,9 +23,29 @@ public class ProdutoCompradoModel {
 	@Column
 	private BigDecimal total;
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "anuncio_id")
+	@JoinColumn(name = "anuncio")
 	private AnuncioModel anuncio;
+	@OneToOne
+	@JoinColumn(name="comprador_id")
+	private ClienteModels cliente;
+	@OneToOne
+	@JoinColumn(name="vendedor_id")
+	private ClienteModels vendedor;
 	
+	
+	
+	public ClienteModels getCliente() {
+		return cliente;
+	}
+	public void setCliente(ClienteModels cliente) {
+		this.cliente = cliente;
+	}
+	public ClienteModels getVendedor() {
+		return vendedor;
+	}
+	public void setVendedor(ClienteModels vendedor) {
+		this.vendedor = vendedor;
+	}
 	public AnuncioModel getAnuncio() {
 		return anuncio;
 	}

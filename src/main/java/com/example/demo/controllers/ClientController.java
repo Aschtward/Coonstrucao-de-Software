@@ -3,7 +3,6 @@ package com.example.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.ClientDAO;
-import com.example.demo.models.ClienteModels;
+import com.example.demo.dao.ProdutoCompradoDAO;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -22,6 +21,8 @@ public class ClientController {
 
 	@Autowired
 	ClientDAO cDao;
+	@Autowired
+	ProdutoCompradoDAO produtoCompradoDao;
 
 	@PostMapping(value = "/createaccount")
 	public String adicionarCliente(@Valid @RequestParam String name,@Valid @Email @RequestParam String email,

@@ -33,15 +33,6 @@ public class ClientDAO {
 	@Autowired
 	TokenDAO tokenDao;
 	
-	public void adicionarProdutoCarrinho(ProdutoCompradoModel produto) {
-		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (cliente instanceof UserDetails) {
-        	String email = ((UserDetails) cliente).getUsername();
-        	ClienteModels clienteCarrinho = buscaCliente(email);
-        	clienteCarrinho.getCarrinho().add(produto);
-        	salvarCliente(clienteCarrinho);
-        }
-	}
 
 	public ClienteModels adicionarCliente(String name, String email, String password) {
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
