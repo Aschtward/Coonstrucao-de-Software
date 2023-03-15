@@ -87,4 +87,8 @@ public class AnuncioDAO {
 		}
 
 	}
+	
+	public List<AnuncioModel> buscarAnuncioLike(String nome){
+		return anuncioRepo.findByNameContaining(nome);
+	}
 }

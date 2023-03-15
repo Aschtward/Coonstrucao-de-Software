@@ -21,10 +21,10 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
-			<form class="form-inline my-2 my-lg-0 mx-auto">
+			<form class="form-inline my-2 my-lg-0 mx-auto" th:action="@{/pesquisarProdutos}" method="post">
 				<i class="fa-light fa-magnifying-glass" style="color:grey"></i>
 				<input class="form-control mr-sm-4" style="width: 400px;" type="search" placeholder="Buscar Produtos"
-					aria-label="Search">
+					name="nome" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
 						class="fas fa-search"></i></button>
 			</form>

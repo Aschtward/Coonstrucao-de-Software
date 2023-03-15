@@ -52,4 +52,16 @@ public class AnuncioController {
 		ModelAndView anuncioView =  new ModelAndView("produtos");
 		return anuncioView;
 	}
+	
+	@PostMapping("/pesquisarProdutos")
+	public ModelAndView pesquisarProdutos(@RequestParam String nome) {
+		ModelAndView view = new ModelAndView("pesquisa");
+		List<AnuncioModel> anuncios = anuncioDao.buscarAnuncioLike(nome);
+		for(AnuncioModel a : anuncios) {
+			System.out.println(a.getName());
+		}
+		view.addObject("pesquisa",nome);
+		view.addObject("anuncios",anuncios);
+		return view;
+	}
 }
