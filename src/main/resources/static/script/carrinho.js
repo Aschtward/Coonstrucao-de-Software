@@ -10,7 +10,6 @@
 					contentType: "application/json",
 					data: carrinho,
 				});
-				mostrarCarrinho();
 			}
 		}
 		function aumentarQuantidade(idProduto) {
@@ -96,9 +95,19 @@
 				carrinho = JSON.parse(carrinho);
 				var listaProdutos = document.getElementById("lista-produtos");
 				listaProdutos.innerHTML = "";
+				if(carrinho.length == 0){
+					document.getElementById("carrinho-modal-list").innerHTML = `
+					<div class = "text-center">
+						<h5>Nada por aqui ainda...</h5>
+					</div>`;
+					document.getElementById("total-carrinho").innerHTML = "";
+					document.getElementById("botao-fechar-compra").style.display = "none";
+					return;
+				}
 				for (var i = 0; i < carrinho.length; i++) {
 					var produto = carrinho[i];
 					var itemLista = document.createElement('li');
+					document.getElementById("carrinho-modal-list").innerHTML = ``;
 					itemLista.id = "item-carrinho-" + produto.id;
 					itemLista.classList.add('list-group-item');
 					itemLista.innerHTML = `
@@ -110,14 +119,15 @@
       		<h5>${produto.nome} <span id="produto-carrinho-${produto.id}"class="badge badge-primary badge-pill">${produto.quantidade}</span></h5>
       		<p>R$ ${produto.preco.toFixed(2)}</p>
       		<div class = "row justify-content-around">
-      			<button class = "btn  btn-sm btn-danger" onclick ="aumentarQuantidade(${produto.id})"><i class="fas fa-plus"></i></button>
-      			<button class = "btn  btn-sm btn-danger" onclick ="diminuirQuantidade(${produto.id})"><i class="fas fa-minus"></i></button>
+      			<button class = "btn  btn-sm btn-light" onclick ="aumentarQuantidade(${produto.id}),mostraCarrinho()"><i class="fas fa-plus"></i></button>
+      			<button class = "btn  btn-sm btn-light" onclick ="diminuirQuantidade(${produto.id}),mostraCarrinho()"><i class="fas fa-minus"></i></button>
       		</div>
       	</div>
     </div>
   `;
 					listaProdutos.appendChild(itemLista);
 					totalCarrinho += produto.preco * produto.quantidade;
+					document.getElementById("botao-fechar-compra").style.display = "block";
 				}
 				document.getElementById("total-carrinho").innerHTML = "Sub-total: R$" + totalCarrinho;
 			}

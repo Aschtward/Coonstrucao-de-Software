@@ -33,7 +33,7 @@ public class AnuncioDAO {
     
     public List<AnuncioModel> maisvendido(){
     	List<AnuncioModel> anuncios = anuncioRepo.findAll();
-    	if(anuncios.size() >= 5) {
+    	if(anuncios.size() >= 10) {
         	List<AnuncioModel> anuncioMaisVendido = new ArrayList<AnuncioModel>();
         	anuncios.sort(new Comparator<AnuncioModel>() {
         		public int compare(AnuncioModel a1, AnuncioModel a2) {
