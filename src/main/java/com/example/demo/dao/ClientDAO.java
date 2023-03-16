@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.enums.RoleName;
 import com.example.demo.models.ClienteModels;
-import com.example.demo.models.ProdutoCompradoModel;
 import com.example.demo.models.TokenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
@@ -102,5 +101,8 @@ public class ClientDAO {
 	public ClienteModels buscaCliente(String email) {
 		return clientRepo.findByEmail(email).get();
 	}
-
+	
+	public void excluirConta() {
+		clientRepo.delete(buscarSessaoCliente());		
+	}
 }

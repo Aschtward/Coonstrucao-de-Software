@@ -23,6 +23,8 @@ public class ClientController {
 	ClientDAO cDao;
 	@Autowired
 	ProdutoCompradoDAO produtoCompradoDao;
+	@Autowired
+	TokenController tController;
 
 	@PostMapping(value = "/createaccount")
 	public String adicionarCliente(@Valid @RequestParam String name,@Valid @Email @RequestParam String email,
@@ -59,5 +61,10 @@ public class ClientController {
 		return "/recover_password";
 	}
 	
-	
+	@GetMapping("/deleteAccount")
+	public String excluirConta() {
+		tController.removerToken();
+		cDao.excluirConta();
+		return "/login";
+	}
 }

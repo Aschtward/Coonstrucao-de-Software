@@ -27,4 +27,8 @@ public class TokenDAO {
 		TokenModel tokenAux = repository.findByRecoveryToken(token);
 		repository.delete(tokenAux);
 	}
+
+	public void removerToken(TokenModel tModel) {
+		repository.delete(tModel);
+	}
 }
