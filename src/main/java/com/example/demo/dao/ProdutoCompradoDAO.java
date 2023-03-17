@@ -42,6 +42,7 @@ public class ProdutoCompradoDAO {
 				compra.setTotal(new BigDecimal(a.getPreco()));
 				compra.setCliente(comprador);
 				compra.setVendedor(vendedor.get());
+				compra.setFoiAvaliado(false);
 				compraRepository.save(compra);
 			}	
 		}
@@ -53,6 +54,15 @@ public class ProdutoCompradoDAO {
 	
 	public List<ProdutoCompradoModel> buscarPorVendedor(ClienteModels vendedor){
 		return compraRepository.findByVendedor(vendedor);
+	}
+
+	public void marcarAvaliada(String idCompra) {
+		Optional<ProdutoCompradoModel> compra = compraRepository.findById(Long.parseLong(idCompra));
+		if(compra.isPresent()) {
+			compra.get().setFoiAvaliado(true);
+			compraRepository.save(compra.get());
+		}
+		
 	}
 
 }

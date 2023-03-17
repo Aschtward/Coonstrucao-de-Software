@@ -34,7 +34,8 @@ public class ProdutoCompradoModel {
 	@OneToOne
 	@JoinColumn(name="endereco_id")
 	private EnderecoModel endereco;
-	
+	@Column
+	private boolean foiAvaliado;
 	
 	
 	public ClienteModels getCliente() {
@@ -48,6 +49,19 @@ public class ProdutoCompradoModel {
 	}
 	public void setVendedor(ClienteModels vendedor) {
 		this.vendedor = vendedor;
+	}
+	public boolean isFoiAvaliado() {
+		return foiAvaliado;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public void setFoiAvaliado(boolean foiAvaliado) {
+		this.foiAvaliado = foiAvaliado;
 	}
 	public AnuncioModel getAnuncio() {
 		return anuncio;

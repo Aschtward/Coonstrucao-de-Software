@@ -3,6 +3,7 @@ package com.example.demo.models;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class AnuncioModel {
 	private String descricao;
 	@Column
 	private int vendas;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "avaliacao_id")
 	private List<AvaliacaoModel> avaliacao;
 	@Column

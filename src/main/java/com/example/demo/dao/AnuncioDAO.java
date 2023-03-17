@@ -16,8 +16,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.models.AnuncioModel;
+import com.example.demo.models.AvaliacaoModel;
 import com.example.demo.models.ClienteModels;
+import com.example.demo.models.ProdutoCompradoModel;
 import com.example.demo.repository.AnuncioRepository;
+import com.example.demo.repository.ProdutoRepository;
 
 @Component
 public class AnuncioDAO {
@@ -26,6 +29,8 @@ public class AnuncioDAO {
 	private AnuncioRepository anuncioRepo;
     @Autowired
     ClientDAO cDao;
+    @Autowired
+    private	ProdutoRepository compraRepository;
     
     public List<AnuncioModel> exibirTodos(){
     	return anuncioRepo.findAll();
@@ -38,9 +43,9 @@ public class AnuncioDAO {
         	anuncios.sort(new Comparator<AnuncioModel>() {
         		public int compare(AnuncioModel a1, AnuncioModel a2) {
         			if(a1.getVendas() > a2.getVendas()) {
-        				return +1;
-        			}else {
         				return -1;
+        			}else {
+        				return +1;
         			}
         		}
         	});
@@ -90,5 +95,31 @@ public class AnuncioDAO {
 	
 	public List<AnuncioModel> buscarAnuncioLike(String nome){
 		return anuncioRepo.findByNameContaining(nome);
+	}
+
+	public boolean avaliarProduto(String id, String nota, String avaliacao, String idCompra) {
+		Optional<AnuncioModel> anuncio = anuncioRepo.findById(Long.parseLong(id));
+		if(anuncio.isPresent()) {
+			ClienteModels cliente = cDao.buscarSessaoCliente();
+			AvaliacaoModel novaAvaliacao = new AvaliacaoModel();
+			novaAvaliacao.setCliente(cliente);
+			novaAvaliacao.setNota(Integer.parseInt(nota));
+			novaAvaliacao.setAvaliacao(avaliacao);
+			anuncio.get().getAvaliacao().add(novaAvaliacao);
+			int notaTotal  = 0;
+			for(AvaliacaoModel ava : anuncio.get().getAvaliacao()) {
+				notaTotal += ava.getNota();
+			}
+			anuncio.get().setNotaTotal((int)(notaTotal/anuncio.get().getAvaliacao().size()));
+			anuncioRepo.save(anuncio.get());
+			Optional<ProdutoCompradoModel> compra = compraRepository.findById(Long.parseLong(idCompra));
+			if(compra.isPresent()) {
+				compra.get().setFoiAvaliado(true);
+				compraRepository.save(compra.get());
+			}
+			return true;
+		}
+		return false;
+		
 	}
 }

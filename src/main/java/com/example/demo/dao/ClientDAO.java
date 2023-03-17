@@ -6,13 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.enums.RoleName;
 import com.example.demo.models.ClienteModels;
-import com.example.demo.models.ProdutoCompradoModel;
+import com.example.demo.models.EnderecoModel;
 import com.example.demo.models.TokenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
@@ -32,6 +33,8 @@ public class ClientDAO {
 	TokenRepository tokenRepo;
 	@Autowired
 	TokenDAO tokenDao;
+	@Autowired
+	EnderecoDAO enderecoDao;
 	
 
 	public ClienteModels adicionarCliente(String name, String email, String password) {
@@ -101,6 +104,28 @@ public class ClientDAO {
 
 	public ClienteModels buscaCliente(String email) {
 		return clientRepo.findByEmail(email).get();
+	}
+	
+	public void cadastrarEnderecoCliente(String nome,String cidade,String rua, String bairro,String numero) {
+		EnderecoModel endereco  = enderecoDao.mudarEndereco(bairro, rua, cidade, numero, nome);
+		System.out.println(endereco.getNome());
+		ClienteModels cliente = buscarSessaoCliente();
+		cliente.getEndereco().add(endereco);
+		clientRepo.save(cliente);
+	}
+
+	public boolean alterarCliente(String nome, String senhaAntiga, String senhaNova, String email) {
+		ClienteModels cliente = this.buscarSessaoCliente();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(encoder.matches(senhaAntiga, cliente.getPassword())) {
+			if(!senhaNova.equals("")) { cliente.setPassword(encoder.encode(senhaNova));}
+			cliente.setEmail(email);
+			cliente.setName(nome);
+			clientRepo.save(cliente);
+			return true;
+		}
+		return false;
+		
 	}
 
 }
