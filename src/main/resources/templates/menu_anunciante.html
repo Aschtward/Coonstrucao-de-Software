@@ -57,12 +57,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="vendas" role="tabpanel" aria-labelledby="vendas-tab">
-			<table class="table table-bordered table-striped table-hover table-sm" id="produtos-mesa-tabela">
+		<div class="container tab-pane fade" id="vendas" role="tabpanel" aria-labelledby="vendas-tab">
+			<table class="table table-bordered table-sm" id="produtos-mesa-tabela">
 				<thead>
 					<tr>
 						<th>Imagem</th>
 						<th>Cliente</th>
+						<th>Endereço de entrega</th>
 						<th>Produto</th>
 						<th>Quantidade</th>
 						<th>Total</th>
@@ -73,6 +74,9 @@
 						<td><img th:src="'img/prodImages/' + ${venda.anuncio.image}+'.jpg'"
 								style="width:100px;height:100px;object-fit:contain;"></td>
 						<td th:text="${venda.cliente.name}"></td>
+						<td
+							th:text="${venda.endereco.cidade} + ',  ' + ${venda.endereco.bairro} + ',  ' + ${venda.endereco.rua} + '  ' + ${venda.endereco.numero}">
+						</td>
 						<td th:text="${venda.anuncio.name}"></td>
 						<td th:text="${venda.quantidade}"></td>
 						<td th:text="${venda.total}"></td>

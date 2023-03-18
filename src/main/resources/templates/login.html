@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 
-<body>
+<body style="background-image: url('img/a&g.png');">
 
 	<nav class="sidebar navbar navbar-expand-lg navbar-light justify-content-between"
 		style="background-color: rgb(255, 255, 255);">
@@ -18,9 +18,10 @@
 	</br>
 	</br>
 	<div class="container mx-auto my-auto" style="width:fit-content;">
-		<h2>Entrar</h2>
-		<div class=" col-4"></div>
-		<form th:action="@{/loginPage}" method="post" required>
+		<form th:action="@{/loginPage}" class="form-control" method="post" required style="background-color: rgb(255, 255, 255);">
+			<div class="form-group">
+				<h2>Entrar</h2>
+			</div>
 			<div class="form-group">
 				<small id="message"></small>
 				</br>
@@ -41,7 +42,7 @@
 					</a>
 				</div>
 				<div class="col-6">
-					<a data-toggle="modal" data-target="#forgotModal">
+					<a href="enviarEmail" data-toggle="modal" data-target="#forgotModal">
 						<h6>Esqueci minha senha.</h6>
 					</a>
 				</div>

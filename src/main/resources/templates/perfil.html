@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
 
-<body onload="carregaCarrinho()">
+<body onload="carregaCarrinho(),mostraCarrinho()">
 
 	<div th:replace="~{nav :: nav}"></div>
 	</br>
@@ -70,7 +70,7 @@
 							<input class="form-control" type="password" id="senhaNova" name="senhaNova">
 						</div>
 					</div>
-					<div class="form-group md-col-6">
+					<div class="form-group text-right md-col-6">
 						<button id="alterarDadosButton" class="btn  btn-primary" type="submit">Salvar</button>
 					</div>
 				</form>

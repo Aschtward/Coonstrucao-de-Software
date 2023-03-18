@@ -36,4 +36,8 @@ public class EnderecoDAO {
 			enderecoRepository.save(endereco.get());
 		}
 	}
+	
+	public Optional<EnderecoModel> buscarEndereco(String id) {
+		return enderecoRepository.findById(Long.parseLong(id));
+	}
 }

@@ -80,11 +80,14 @@ public class ClientDAO {
 		return false;
 	}
 
-	public void sendRecoveryToken(String email) {
-		ClienteModels cliente = new ClienteModels();
-		clientAdapter.geraCliente(clientRepo.findByEmail(email), cliente);
-		String token = tokenDao.gerarToken(cliente);
-		emailDao.sendRecoveryEmail(email, token);
+	public boolean sendRecoveryToken(String email) {
+		Optional<ClienteModels> cliente = clientRepo.findByEmail(email);
+		if(cliente.isPresent()) {
+			String token = tokenDao.gerarToken(cliente.get());
+			emailDao.sendRecoveryEmail(email, token);
+			return true;
+		}
+		return false;
 	}
 
 	public void salvarCliente(ClienteModels aux) {

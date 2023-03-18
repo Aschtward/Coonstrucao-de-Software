@@ -8,40 +8,71 @@
 		integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/index.css">
-	<script src="script/carrinho.js"></script>
+	<link rel="stylesheet" href="../css/index.css">
+	<script src="../script/carrinho.js"></script>
 </head>
 
-<body style="background-color: rgb(229, 229, 229); ;">
+<body onload="mostraCarrinho(),carregaCarrinho()" style="background-color: rgb(229, 229, 229);">
 
 	<div th:replace="~{nav :: nav}"></div>
-	
+	</br>
+	</br>
+	</br>
+	</br>
 	<div class="container shadow-box" style="background-color: white;">
 		<div class="row">
 			<div class="col-7" style="margin:25px;">
-				<img th:src="'../img/prodImages/' + ${anuncio.image}+'.jpg'"
-					style="width: 500px; height:500px; object-fit:contain">
+				<div class="text-center">
+					<img th:src="'../img/prodImages/' + ${anuncio.image}+'.jpg'"
+						style="width: 400px; height:400px; object-fit:contain">
+				</div>
 				<hr>
 				<h2>Descrição</h2>
 				<h4 th:text="${anuncio.descricao}"></h4>
+				<hr>
+				<h2>Avaliações</h2>
+				<div th:each="avaliacao : ${anuncio.avaliacao}">
+					<div class="container row d-flex justify-content-between">
+						<h5 th:text="${avaliacao.cliente.name}"></h5>
+						<div class="row text-center justify-content-center" th:if="${avaliacao.nota != null}">
+							<div th:each="i : ${#numbers.sequence(1, 5)}">
+								<span th:if="${i &lt;= avaliacao.nota }" class="fa fa-star text-warning"></span>
+								<span th:if="${i > avaliacao.nota }" class="fa fa-star"
+									style="color: rgb(214, 214, 214);"></span>
+							</div>
+						</div>
+					</div>
+					<spam class="text-muted" th:text="${avaliacao.avaliacao}"></spam>
+					<hr>
+				</div>
 			</div>
 			<div class="col-4 product-box">
 				<h2 th:text="${anuncio.name}"></h2>
 				</br>
-				<a>Quantidade:</a>
-				<select class="form-select" aria-label="Default select example">
-					<option selected>Open this select menu</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-				<h3 th:text="'R$'  + ${anuncio.preco}">
-				</h3>
-				<buttom class="btn btn-lg btn-primary text-center">Adicionar ao Carrinho</buttom>
+				<div>
+					<h3 class="price-text font-weight-bold" style="font-size: 34px;" th:text="'R$'  + ${anuncio.preco}">
+					</h3>
+				</div>
+				<div class="form-group">
+					<label for="select-quantidade" class="col-form-label">Quantidade:</label>
+					<select id ="select-quantidade" class="custom-select" aria-label="Default select example">
+						<option value= "1" >1</option>
+						<option value= "2" >2</option>
+						<option value= "3" >3</option>
+					</select>
+				</div>
+				<div class="text-center">
+					<button type="button" class="btn btn-sm btn-success text-center"
+						th:onclick="adicionarCarrinho([[${anuncio.id}]],[[${anuncio.name}]],[[${anuncio.image}]],[[${anuncio.preco}]],document.getElementById('select-quantidade').value),mostraCarrinho()"
+						style="font-size: 24px;width:300px;">
+						Carrinho
+						<i class="fas fa-cart-plus"></i>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
