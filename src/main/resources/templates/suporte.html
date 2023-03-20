@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<h1>Como podemos ajudar?</h1>
+		<form th:action="@{/suporte}" method="post">
+			<label for="subject">Assunto</label><br>
+			<input type="text" id="subject" name="subject" size="50"><br><br>
+			<label for="content">Mensagem</label><br>
+			<textarea id="content" name="content" cols="80" rows="10"></textarea><br><br>
+			<input type="submit" value="Enviar">
+		</form>
+	</body>
+</html>

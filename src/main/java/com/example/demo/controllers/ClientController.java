@@ -14,6 +14,7 @@ import com.example.demo.dao.ProdutoCompradoDAO;
 import com.example.demo.dao.TokenDAO;
 import com.example.demo.repository.TokenRepository;
 
+import jakarta.persistence.PostLoad;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
