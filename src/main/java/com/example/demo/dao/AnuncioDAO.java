@@ -61,7 +61,7 @@ public class AnuncioDAO {
     	return anuncioRepo.findById(Long.valueOf(id));
     }
 
-	public void inserirAnuncio(String nome, BigDecimal price, MultipartFile image, String descricao) {
+	public boolean inserirAnuncio(String nome, BigDecimal price, MultipartFile image, String descricao) {
 		try {
 			AnuncioModel anuncio = new AnuncioModel();
 			anuncio.setName(nome);
@@ -87,9 +87,11 @@ public class AnuncioDAO {
 	        	anunciante.setAnuncio(anuncios);
 	        	cDao.salvarCliente(anunciante);
 	        }
+	        return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return true;
 
 	}
 	
@@ -106,6 +108,7 @@ public class AnuncioDAO {
 			novaAvaliacao.setNota(Integer.parseInt(nota));
 			novaAvaliacao.setAvaliacao(avaliacao);
 			anuncio.get().getAvaliacao().add(novaAvaliacao);
+			System.out.println("oxi");
 			int notaTotal  = 0;
 			for(AvaliacaoModel ava : anuncio.get().getAvaliacao()) {
 				notaTotal += ava.getNota();
@@ -119,7 +122,7 @@ public class AnuncioDAO {
 			}
 			return true;
 		}
-		return false;
+		return true;
 		
 	}
 }

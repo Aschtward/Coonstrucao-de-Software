@@ -44,6 +44,7 @@ function diminuirQuantidade(idProduto) {
 				localStorage.setItem('carrinho', JSON.stringify(carrinho));
 				carregaCarrinho();
 				document.getElementById("total-carrinho").innerHTML = "Sub-total: R$" + totalCarrinho;
+				if(carrinho.length == 0){ localStorage.removeItem('carrinho');}
 				return;
 			}
 			document.getElementById("produto-carrinho-" + idProduto).innerHTML = carrinho[i].quantidade;
@@ -81,11 +82,12 @@ function adicionarCarrinho(id, name, img, preco, quantidade) {
 
 	carrinho = JSON.parse(carrinho);
 	const itemIndex = carrinho.findIndex(item => item.id === id);
-
+	
+	if(itemIndex === -1){
+		carrinho.push({ id, nome: name, img, preco, quantidade });
+	}
 	if (itemIndex !== -1) {
 		carrinho[itemIndex].quantidade += quantidade;
-	} else {
-		carrinho.push({ id, nome: name, img, preco, quantidade });
 	}
 
 	document.getElementById("numero-produtos").innerHTML = carrinho.length;
