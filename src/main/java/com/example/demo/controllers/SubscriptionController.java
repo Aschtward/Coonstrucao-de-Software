@@ -39,9 +39,11 @@ public class SubscriptionController {
         	List<ProdutoCompradoModel> vendas = compraDAO.buscarPorVendedor(cliente);
         	anuncianteMenu.addObject("anuncios", cliente.getAnuncio());
         	anuncianteMenu.addObject("vendas",vendas);
+        	anuncianteMenu.addObject("cliente",clienteDao.buscarSessaoCliente());
         	return anuncianteMenu;
         }
         ModelAndView novoAnunciante = new ModelAndView("novo_anunciante");
+        novoAnunciante.addObject("cliente",clienteDao.buscarSessaoCliente());
         return novoAnunciante;
     }
 

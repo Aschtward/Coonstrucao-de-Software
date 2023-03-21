@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.dao.ClientDAO;
 import com.example.demo.dao.ProdutoCompradoDAO;
@@ -31,7 +35,14 @@ public class ClientController {
 		return "/login";
 	}
 	
-
+	@GetMapping("/perfil")
+	public ModelAndView exibirPerfil() {
+		ModelAndView perfil = new ModelAndView("perfil");
+		perfil.addObject("cliente", cDao.buscarSessaoCliente());
+		perfil.addObject("enderecos", cDao.buscarSessaoCliente().getEndereco());
+		perfil.addObject("compras", produtoCompradoDao.buscarPorCliente(cDao.buscarSessaoCliente()));
+		return perfil;
+	}
 	@RequestMapping(value = "/confirmAccount", method = { RequestMethod.GET, RequestMethod.POST })
 	public String confirmarConta(@RequestParam("token") String confirmationToken) {
 		cDao.confirmarEmail(confirmationToken);
@@ -57,6 +68,23 @@ public class ClientController {
 	@GetMapping("/forgotPassword")
 	public String forgotPassworView() {
 		return "/recover_password";
+	}
+	@PostMapping("/forgotPassword")
+	public String forgotPasswor(@RequestParam String email) {
+		cDao.sendRecoveryToken(email);
+		return "login";
+	}
+	
+	@PostMapping("/cadastrarEndereco")
+	public RedirectView cadastrarEndereco(@RequestParam  String nome, @RequestParam  String cidade,@RequestParam  String rua,@RequestParam  String bairro,@RequestParam  String numero){
+		cDao.cadastrarEnderecoCliente(nome, cidade, rua, bairro, numero);
+		return new RedirectView("perfil");
+	}
+	
+	@PostMapping("/salvarAlteracoes")
+	public ResponseEntity<Void> salvarAlteracoes(@RequestParam String nome, @RequestParam String senhaAntiga, @RequestParam(required = false) String senhaNova, @RequestParam String email) {
+		if(cDao.alterarCliente(nome,senhaAntiga,senhaNova,email)) { return ResponseEntity.ok().build();}
+		return ResponseEntity.badRequest().build();
 	}
 	
 	
