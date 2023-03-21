@@ -32,27 +32,17 @@ function aumentarQuantidade(idProduto) {
 function diminuirQuantidade(idProduto) {
 	let carrinho = localStorage.getItem('carrinho');
 	carrinho = JSON.parse(carrinho);
-	for (i = 0; i < carrinho.length; i++) {
-		if (carrinho[i].id == idProduto) {
-			carrinho[i].quantidade -= 1;
-			if (carrinho[i].quantidade == 0) {
-				let listaProdutos = document.getElementById("lista-produtos");
-				let itemRemovido = document.getElementById("item-carrinho-" + idProduto);
-				listaProdutos.removeChild(itemRemovido);
-				totalCarrinho -= carrinho[i].preco;
-				carrinho.splice(i, 1);
-				localStorage.setItem('carrinho', JSON.stringify(carrinho));
-				carregaCarrinho();
-				document.getElementById("total-carrinho").innerHTML = "Sub-total: R$" + totalCarrinho;
-				if(carrinho.length == 0){ localStorage.removeItem('carrinho');}
-				return;
-			}
-			document.getElementById("produto-carrinho-" + idProduto).innerHTML = carrinho[i].quantidade;
-			localStorage.setItem('carrinho', JSON.stringify(carrinho));
-			totalCarrinho -= carrinho[i].preco;
-			document.getElementById("total-carrinho").innerHTML = "Sub-total: R$" + totalCarrinho;
-			return;
-		}
+	index = carrinho.findIndex(item => item.id == idProduto);
+	if (index === -1) return;
+	carrinho[index].quantidade--;
+	if (carrinho[index].quantidade == 0) {
+		carrinho.splice(index, 1);
+	}
+	localStorage.setItem('carrinho', JSON.stringify(carrinho));
+	mostraCarrinho();
+	if (carrinho.length == 0) {
+		localStorage.removeItem('carrinho');
+		return;
 	}
 }
 
@@ -97,7 +87,7 @@ function adicionarCarrinho(id, name, img, preco, quantidade) {
 function mostraCarrinho() {
 	let carrinho = localStorage.getItem('carrinho');
 	totalCarrinho = 0;
-	if (carrinho == null) {
+	if (carrinho === null) {
 		document.getElementById("carrinho-modal-list").innerHTML = `
 					<div class = "text-center">
 						<h5>Nada por aqui ainda...</h5>
