@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.dao.AnuncioDAO;
+import com.example.demo.dao.ClientDAO;
 import com.example.demo.models.AnuncioModel;
 
 @Controller
@@ -22,12 +24,27 @@ public class AnuncioController {
 	
 	@Autowired
 	AnuncioDAO anuncioDao;
-	
+	@Autowired
+	ClientDAO clienteDao;
 	
 	@PostMapping("/cadastrarAnuncio")
-	public String cadastrarAnuncio(@RequestParam String preco, @RequestParam String nome,@RequestParam String descricao, @RequestParam MultipartFile imagem) {
+	public RedirectView cadastrarAnuncio(@RequestParam String preco, @RequestParam String nome,@RequestParam String descricao, @RequestParam MultipartFile imagem) {
 		anuncioDao.inserirAnuncio(nome, new BigDecimal(preco), imagem,descricao);
-		return "create_sale";
+		return new RedirectView("/anunciante");
+	}
+	
+	@PostMapping("/alterarAnuncio")
+	public RedirectView alterarAnuncio(@RequestParam String preco, @RequestParam String nome,@RequestParam String descricao, @RequestParam(required = false) MultipartFile imagem,@RequestParam String id) {
+		System.out.println(id);
+		anuncioDao.alterarAnuncio(nome, new BigDecimal(preco), imagem,descricao,id);
+		return new RedirectView("/anunciante");
+	}
+	
+	
+	@PostMapping("/avaliarProduto")
+	public RedirectView avaliarProduto(@RequestParam String id, @RequestParam String nota, @RequestParam String avaliacao,@RequestParam String idCompra) {
+		anuncioDao.avaliarProduto(id,nota,avaliacao, idCompra);
+		return new RedirectView("/perfil");
 	}
 	
 	@GetMapping("/")
@@ -36,6 +53,7 @@ public class AnuncioController {
 		ModelAndView anuncioView = new ModelAndView("index");
 		List<AnuncioModel> anuncioMaisVendido = anuncioDao.maisvendido();
 		anuncioView.addObject("anuncios",anuncios);
+		anuncioView.addObject("cliente",clienteDao.buscarSessaoCliente());
 		anuncioView.addObject("maisvendido", anuncioMaisVendido);
 		return anuncioView;
 	}
@@ -46,9 +64,21 @@ public class AnuncioController {
 		if(anuncio.isPresent()) {
 			ModelAndView anuncioView =  new ModelAndView("produtos");
 			anuncioView.addObject("anuncio", anuncio.get());
+			anuncioView.addObject("cliente",clienteDao.buscarSessaoCliente());
 			return anuncioView;
 		}
 		ModelAndView anuncioView =  new ModelAndView("produtos");
+		anuncioView.addObject("cliente",clienteDao.buscarSessaoCliente());
 		return anuncioView;
+	}
+	
+	@PostMapping("/pesquisarProdutos")
+	public ModelAndView pesquisarProdutos(@RequestParam String nome) {
+		ModelAndView view = new ModelAndView("pesquisa");
+		List<AnuncioModel> anuncios = anuncioDao.buscarAnuncioLike(nome);
+		view.addObject("pesquisa",nome);
+		view.addObject("cliente",clienteDao.buscarSessaoCliente());
+		view.addObject("anuncios",anuncios);
+		return view;
 	}
 }

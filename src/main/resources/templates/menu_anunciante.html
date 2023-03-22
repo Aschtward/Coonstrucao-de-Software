@@ -9,113 +9,83 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/index.css">
-	<script src = "script/carrinho.js"></script>
+	<script src="script/carrinho.js"></script>
 	<link rel="stylesheet" href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
 
-<body style="background-color: rgb(218, 218, 218);" onload="carregaCarrinho()">
+<body onload="carregaCarrinho()">
+  
+  <div th:replace="~{nav :: nav}"></div>
 
-	<nav class="sidebar navbar navbar-expand-lg navbar-light bg-light fixed-top">
-		<a class="navbar-brand" th:href="@{/}"><img src="img/icon/logo1.png" width="67" height="68"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
-			<form class="form-inline my-2 my-lg-0 mx-auto">
-				<i class="fa-light fa-magnifying-glass" style="color:grey"></i>
-				<input class="form-control mr-sm-4" style="width: 400px;" type="search" placeholder="Buscar Produtos"
-					aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
-						class="fas fa-search"></i></button>
-			</form>
-			<ul class="navbar-nav">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="img/icon/user2.png" style="width: 40px;height:40px;" />
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Dieta</a>
-						<a class="dropdown-item" href="#">Treino</a>
-						<a class="dropdown-item" th:href="@{/anunciante}">Anunciante</a>
-						<a class="dropdown-item" th:href="@{/suporte}">Suporte</a>
-						<a class="dropdown-item" th:href="@{/deleteAccount}">Deletar Conta</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" th:href="@{/logout}">Sair da Conta</a>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" onclick="mostraCarrinho()" href="#" data-toggle="modal"
-						data-target="#exampleModal"><img src="img/icon/carrinho.png" style="width: 40px;height:40px;">
-						<span class="badge badge-danger badge-pill" id="numero-produtos"></span></a>
-				</li>
-			</ul>
-		</div>
-	</nav>
 	</br>
 	</br>
 	</br>
 	</br>
-	<div class="container shadow-box text-left " style="background-color: white;">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" id="produtos-tab" data-toggle="tab" href="#produtos" role="tab"
-					aria-controls="produtos" aria-selected="true">Meus produtos</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" id="vendas-tab" data-toggle="tab" href="#vendas" role="tab" aria-controls="vendas"
-					aria-selected="false">Minhas Vendas</a>
-			</li>
-		</ul>
-		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="produtos" role="tabpanel" aria-labelledby="produtos-tab">
-				<div class="pt-3">
-					<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#novoAnuncioModal">Anunciar
-						novo
-						produto</button>
-				</div>
-				<div class="container pt-5">
-					<div class="card-columns">
-						<div class="card" th:each="anuncio : ${anuncios}" style="width: 210px;">
-							<img class="card-img-top product-image" th:src="'img/prodImages/' + ${anuncio.image}+'.jpg'"
-								alt="Card image cap">
-							<div class="card-body text-center">
-								<div class="card-title">
-									<h4 class="card-title text-center" th:text="${anuncio.name}"></h4>
-								</div>
-								<a class="price-text font-weight-bold" th:text="'R$ ' + ${anuncio.preco}"></a>
-								<div>
-									<button type="button" class="btn btn-sm btn-success text-center">Editar Produto
-									</button>
-								</div>
+
+	<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="produtos-tab" data-toggle="tab" href="#produtos" role="tab"
+				aria-controls="produtos" aria-selected="true">Meus produtos</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="vendas-tab" data-toggle="tab" href="#vendas" role="tab" aria-controls="vendas"
+				aria-selected="false">Minhas Vendas</a>
+		</li>
+	</ul>
+	<div class="tab-content text-center" id="myTabContent">
+		<div class="tab-pane fade show active" id="produtos" role="tabpanel" aria-labelledby="produtos-tab">
+			<div class="pt-3">
+				<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#novoAnuncioModal">Anunciar
+					novo
+					produto</button>
+			</div>
+			<div class="container pt-5">
+				<div class="card-columns">
+					<div class="card" th:each="anuncio : ${anuncios}" style="width: 210px;">
+						<img class="card-img-top product-image" th:src="'img/prodImages/' + ${anuncio.image}+'.jpg'"
+							alt="Card image cap">
+						<div class="card-body text-center">
+							<div class="card-title">
+								<h4 class="card-title text-center" th:text="${anuncio.name}"></h4>
+							</div>
+							<a class="price-text font-weight-bold" th:text="'R$ ' + ${anuncio.preco}"></a>
+							<div>
+								<button type="button" class="btn btn-sm btn-success text-center"
+									th:onclick="setDadosAnuncio([[${anuncio.name}]],[[${anuncio.preco}]],[[${anuncio.id}]],[[${anuncio.image}]],[[${anuncio.descricao}]])"
+									data-toggle="modal" data-target="#alterarAnuncioModal">Editar Produto
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="vendas" role="tabpanel" aria-labelledby="vendas-tab">
-				<table class="table table-bordered table-striped table-hover table-sm" id="produtos-mesa-tabela">
-					<thead>
-						<tr>
-							<th>Imagem</th>
-							<th>Cliente</th>
-							<th>Produto</th>
-							<th>Quantidade</th>
-							<th>Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="venda : ${vendas}">
-							<td><img th:src="'img/prodImages/' + ${venda.anuncio.image}+'.jpg'"
-									style="width:100px;height:100px;object-fit:contain;"></td>
-							<td th:text="${venda.cliente.name}"></td>
-							<td th:text="${venda.anuncio.name}"></td>
-							<td th:text="${venda.quantidade}"></td>
-							<td th:text="${venda.total}"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		</div>
+		<div class="container tab-pane fade" id="vendas" role="tabpanel" aria-labelledby="vendas-tab">
+			<table class="table table-bordered table-sm" id="produtos-mesa-tabela">
+				<thead>
+					<tr>
+						<th>Imagem</th>
+						<th>Cliente</th>
+						<th>Endereço de entrega</th>
+						<th>Produto</th>
+						<th>Quantidade</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="venda : ${vendas}">
+						<td><img th:src="'img/prodImages/' + ${venda.anuncio.image}+'.jpg'"
+								style="width:100px;height:100px;object-fit:contain;"></td>
+						<td th:text="${venda.cliente.name}"></td>
+						<td
+							th:text="${venda.endereco.cidade} + ',  ' + ${venda.endereco.bairro} + ',  ' + ${venda.endereco.rua} + '  ' + ${venda.endereco.numero}">
+						</td>
+						<td th:text="${venda.anuncio.name}"></td>
+						<td th:text="${venda.quantidade}"></td>
+						<td th:text="${venda.total}"></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	</br>
@@ -141,7 +111,7 @@
 													src="img/imageselect.png" alt="example placeholder" id="preview"
 													style="width: 200px;cursor:pointer;" /></label>
 											<input type="file" class="form-control d-none" name="imagem" id="imagem"
-												onchange="exibirPreview(this)" required />
+												onchange="exibirPreview()" required />
 										</div>
 									</div>
 								</div>
@@ -149,7 +119,7 @@
 									<label class="col-form-label" for="nome">Nome</label>
 									<input class="form-control" type="text" name="nome" required>
 									<label class="col-form-label" for="preco">Preço</label>
-									<input class="form-control" type="number" name="preco" required>
+									<input class="form-control" type="number" min="1" step="any" name="preco" required>
 									<label class="col-form-label" for="preco">Descricao</label>
 									<textarea input class="form-control" type="text" name="descricao"
 										required></textarea>
@@ -165,28 +135,48 @@
 		</div>
 	</div>
 
-	<div class="container demo">
-		<div class="modal left fade" id="exampleModal" tabindex="" role="dialog" aria-labelledby="exampleModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2 class="modal-title">Carrinho</h2>
-					</div>
-
-					<div class="modal-body">
-						<div class="nav flex-sm-column flex-row">
-							<ul class="list-group" id="lista-produtos">
-							</ul>
+	<div class="modal fade" id="alterarAnuncioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Alterar produto.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/alterarAnuncio}" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-6 my-auto">
+									<div class="d-flex justify-content-center">
+										<div class="btn">
+											<label class="form-label text-white m-1" for="altera-imagem"><img
+													type="button" src="img/imageselect.png" alt="example placeholder"
+													id="altera-preview" style="width: 200px;cursor:pointer;" /></label>
+											<input type="file" class="form-control d-none" name="imagem"
+												id="altera-imagem" onchange="exibirPreviewAlt()"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<label class="col-form-label" for="nome">Nome</label>
+									<input class="form-control" type="text" id="nome-alt" name="nome" required>
+									<label class="col-form-label" for="preco">Preço</label>
+									<input class="form-control" type="number" min="1" step="any" id="altera-preco"
+										name="preco" required>
+									<label class="col-form-label" for="preco">Descricao</label>
+									<textarea input class="form-control" id="altera-descricao" type="text"
+										name="descricao" required></textarea>
+									<input id="altera-id" name="id" type="text" hidden>
+								</div>
+							</div>
 						</div>
-						<div class="d-flex justify-content-center align-items-center" style="margin:10px;">
-							<h3 id="total-carrinho"></h3>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
-						<div class="d-flex justify-content-center align-items-center">
-							<button class="btn btn-success btn-lg">Fechar
-								Compra</button>
-						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -207,6 +197,37 @@
 		crossorigin="anonymous"></script>
 	<script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 	<script src="//cdn.datatables.net/plug-ins/1.13.2/i18n/pt-BR.json"></script>
+	<script>
+		function setDadosAnuncio(name, preco, id, image, descricao) {
+			let imagem = document.getElementById("altera-preview").src = "/img/prodImages/" + image + ".jpg";
+			document.getElementById('nome-alt').value = name;
+			document.getElementById('altera-preco').value = preco;
+			document.getElementById('altera-id').value = id;
+			document.getElementById('altera-descricao').innerHTML = descricao;
+		}
+		function exibirPreviewAlt() {
+			var imagemInput = document.getElementById("altera-imagem").files[0];
+			var imagem = document.getElementById("altera-preview");
+			var leitor = new FileReader();
+
+			leitor.onload = function (e) {
+				imagem.src = e.target.result;
+			}
+
+			leitor.readAsDataURL(imagemInput);
+		}
+		function exibirPreview() {
+			var imagemInput = document.getElementById("imagem").files[0];
+			var imagem = document.getElementById("preview");
+			var leitor = new FileReader();
+
+			leitor.onload = function (e) {
+				imagem.src = e.target.result;
+			}
+
+			leitor.readAsDataURL(imagemInput);
+		}
+	</script>
 	<script>
 		$(document).ready(function () {
 			$('#produtos-mesa-tabela').DataTable({
