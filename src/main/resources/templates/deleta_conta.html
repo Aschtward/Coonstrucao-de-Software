@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<h1>Deseja realmente cancelar a sua conta?</h1>
+<form th:action="@{/deleteAccount}" method="post">
+	<button name="cancelar" value="cancel">Deletar Conta</button>
+</form>
+<form th:action="@{/}" method="get">
+	<button name="retornar" value="return">Retornar</button>
+</form>
+</body>
+</html>

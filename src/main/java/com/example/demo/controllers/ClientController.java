@@ -15,7 +15,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.dao.ClientDAO;
 import com.example.demo.dao.ProdutoCompradoDAO;
+import com.example.demo.dao.TokenDAO;
+import com.example.demo.repository.TokenRepository;
 
+import jakarta.persistence.PostLoad;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -27,6 +30,10 @@ public class ClientController {
 	ClientDAO cDao;
 	@Autowired
 	ProdutoCompradoDAO produtoCompradoDao;
+	@Autowired
+	TokenDAO tDao;
+	@Autowired
+	TokenRepository tRepo;
 
 	@PostMapping(value = "/createaccount")
 	public String adicionarCliente(@Valid @RequestParam String name,@Valid @Email @RequestParam String email,
@@ -87,5 +94,15 @@ public class ClientController {
 		return ResponseEntity.badRequest().build();
 	}
 	
+	@GetMapping("/deleteAccount")
+	public String excluirContaView() {
+		return "/deleta_conta";
+	}
 	
+	@PostMapping("/deleteAccount")
+	public String excluirConta() {
+		tDao.removerToken(tRepo.findById(cDao.buscarSessaoCliente().getId()).get());
+		cDao.excluirConta();
+		return "/login";
+	}
 }
