@@ -22,10 +22,11 @@ public class SupportController {
   public String enviarEmail(@RequestParam("subject") String assunto,
                             @RequestParam("content") String conteudo) {
     String nomeRemetente = cDao.buscarSessaoCliente().getName();
-    String idCliente = cDao.buscarSessaoCliente().getId().toString();
+    String assunto_real =
+        "Usuário:" + cDao.buscarSessaoCliente().getId().toString() + " -> " +
+        assunto;
     String email = "applyandgrowth@gmail.com";
-    eDao.sendSupportEmail(nomeRemetente, email, email,
-                          idCliente + " " + assunto, conteudo);
+    eDao.sendSupportEmail(nomeRemetente, email, email, assunto_real, conteudo);
     return "/email_enviado";
   }
 }

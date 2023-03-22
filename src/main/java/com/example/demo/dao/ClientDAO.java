@@ -1,20 +1,18 @@
 package com.example.demo.dao;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-
 import com.example.demo.adapter.ClientAdapter;
 import com.example.demo.enums.RoleName;
 import com.example.demo.models.ClienteModels;
 import com.example.demo.models.TokenModel;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.TokenRepository;
+import java.time.LocalDate;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ClientDAO {
@@ -31,12 +29,12 @@ public class ClientDAO {
 	TokenRepository tokenRepo;
 	@Autowired
 	TokenDAO tokenDao;
-	
 
-	public ClienteModels adicionarCliente(String name, String email, String password) {
+	public ClienteModels adicionarCliente(String name, String email,
+			String password) {
 		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
-		
-		if(roleDao.buscarAllRoles().isEmpty()) {
+
+		if (roleDao.buscarAllRoles().isEmpty()) {
 			roleDao.inserirRole(RoleName.ROLE_CLIENTE);
 			roleDao.inserirRole(RoleName.ROLE_ANUNCIANTE);
 		}
@@ -46,7 +44,8 @@ public class ClientDAO {
 
 		TokenModel confirmationTolken = new TokenModel(cliente);
 		clientRepo.save(cliente);
-		emailDao.sendConfirmationEmail(email, confirmationTolken.getRecoveryToken());
+		emailDao.sendConfirmationEmail(email,
+				confirmationTolken.getRecoveryToken());
 		tokenRepo.save(confirmationTolken);
 		return cliente;
 	}
@@ -55,7 +54,8 @@ public class ClientDAO {
 		TokenModel token = tokenRepo.findByRecoveryToken(confirmationToken);
 		if (token != null) {
 			ClienteModels cliente = new ClienteModels();
-			clientAdapter.geraCliente(clientRepo.findByEmail(token.getUser().getEmail()), cliente);
+			clientAdapter.geraCliente(
+					clientRepo.findByEmail(token.getUser().getEmail()), cliente);
 			cliente.setIsConfirmed(true);
 			clientRepo.save(cliente);
 		}
@@ -63,7 +63,8 @@ public class ClientDAO {
 
 	public boolean changePassword(String newPassword, String token) {
 		TokenModel tokenModel = tokenDao.buscarToken(token);
-		if (tokenModel != null && tokenModel.getCreatedDate().isAfter(LocalDate.now())) {
+		if (tokenModel != null &&
+				tokenModel.getCreatedDate().isAfter(LocalDate.now())) {
 			Optional<ClienteModels> cliente = clientRepo.findByEmail(tokenModel.getUser().getEmail());
 			if (cliente.isPresent()) {
 				BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
@@ -85,24 +86,23 @@ public class ClientDAO {
 
 	public void salvarCliente(ClienteModels aux) {
 		clientRepo.save(aux);
-
 	}
-	
+
 	public ClienteModels buscarSessaoCliente() {
 		Object cliente = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (cliente instanceof UserDetails) {
-        	String email = ((UserDetails) cliente).getUsername();
-        	ClienteModels clienteAtual = buscaCliente(email);
-        	return clienteAtual;
-        }
-        return null;
+		if (cliente instanceof UserDetails) {
+			String email = ((UserDetails) cliente).getUsername();
+			ClienteModels clienteAtual = buscaCliente(email);
+			return clienteAtual;
+		}
+		return null;
 	}
 
 	public ClienteModels buscaCliente(String email) {
 		return clientRepo.findByEmail(email).get();
 	}
-	
+
 	public void excluirConta() {
-		clientRepo.delete(buscarSessaoCliente());		
+		clientRepo.delete(buscarSessaoCliente());
 	}
 }

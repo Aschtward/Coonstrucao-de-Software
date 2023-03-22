@@ -1,11 +1,5 @@
 package com.example.demo.models;
 
-import java.util.Collection;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,185 +14,157 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import java.util.Collection;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_clientes")
-public class ClienteModels implements UserDetails{
-	
-	private static final long serialVersionUID = 1L;
+public class ClienteModels implements UserDetails {
 
-	@Id
-	@GeneratedValue(strategy  = GenerationType.AUTO)
-	protected Long id;
-	
-	@NotBlank
-	@Column(unique  = true)
-	@Email
-	protected String email;
-	
-	@NotBlank
-	@Column
-	protected String password;
-	
-	@NotBlank
-	@Column
-	private String name;
-	
-	@Column
-	private Boolean isConfirmed;
-	
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "TB_CLIENTE_ANUNCIO",
-	joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
-	private List<AnuncioModel> anuncio;
-	
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "TB_CLIENTE_ENDERECO",
-	joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "endereco_id"))
-	private List<EnderecoModel> endereco;
-	
-	@OneToOne
-	@JoinTable(name = "TB_CLIENTE_SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subscription_id"))
-	private Assinatura assinatura;
+  private static final long serialVersionUID = 1L;
 
-	public ClienteModels(@NotBlank String email, @NotBlank String password, @NotBlank String name, Boolean isConfirmed,
-			List<RoleModel> roles) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.isConfirmed = isConfirmed;
-		this.roles = roles;
-	}
+  @Id @GeneratedValue(strategy = GenerationType.AUTO) protected Long id;
 
-	public ClienteModels() {
-		// TODO Auto-generated constructor stub
-	}
+  @NotBlank @Column(unique = true) @Email protected String email;
 
-	@ManyToMany
-	@JoinTable(name = "TB_CLIENTE_ROLES",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<RoleModel> roles;
+  @NotBlank @Column protected String password;
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles;
-	}
+  @NotBlank @Column private String name;
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return email;
-	}
+  @Column private Boolean isConfirmed;
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return this.getIsConfirmed();
-	}
+  @OneToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "TB_CLIENTE_ANUNCIO",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "anuncio_id"))
+  private List<AnuncioModel> anuncio;
 
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+  @OneToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "TB_CLIENTE_ENDERECO",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "endereco_id"))
+  private List<EnderecoModel> endereco;
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+  @OneToOne
+  @JoinTable(name = "TB_CLIENTE_SUBSCRIPTION",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "subscription_id"))
+  private Assinatura assinatura;
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return this.isConfirmed;
-	}
+  @OneToMany
+  @JoinTable(name = "TB_CLIENTE_DIETA",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
+  private List<DietaModel> dietaModels;
 
-	public Long getId() {
-		return id;
-	}
+  public ClienteModels(@NotBlank String email, @NotBlank String password,
+                       @NotBlank String name, Boolean isConfirmed,
+                       List<RoleModel> roles) {
+    super();
+    this.email = email;
+    this.password = password;
+    this.name = name;
+    this.isConfirmed = isConfirmed;
+    this.roles = roles;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public ClienteModels() {
+    // TODO Auto-generated constructor stub
+  }
 
-	public String getName() {
-		return name;
-	}
+  @ManyToMany
+  @JoinTable(name = "TB_CLIENTE_ROLES",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private List<RoleModel> roles;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  @Override
+  public String getPassword() {
+    return password;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.roles;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  @Override
+  public String getUsername() {
+    // TODO Auto-generated method stub
+    return email;
+  }
 
-	public List<RoleModel> getRoles() {
-		return roles;
-	}
+  @Override
+  public boolean isAccountNonExpired() {
+    // TODO Auto-generated method stub
+    return this.getIsConfirmed();
+  }
 
-	public void setRoles(List<RoleModel> roles) {
-		this.roles = roles;
-	}
+  @Override
+  public boolean isAccountNonLocked() {
+    // TODO Auto-generated method stub
+    return true;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  @Override
+  public boolean isCredentialsNonExpired() {
+    // TODO Auto-generated method stub
+    return true;
+  }
 
-	public Boolean getIsConfirmed() {
-		return this.isConfirmed;
-	}
+  @Override
+  public boolean isEnabled() {
+    // TODO Auto-generated method stub
+    return this.isConfirmed;
+  }
 
-	public void setIsConfirmed(Boolean isConfirmed) {
-		this.isConfirmed = isConfirmed;
-	}
+  public Long getId() { return id; }
 
-	public Assinatura getAssinatura() {
-		return assinatura;
-	}
+  public void setId(Long id) { this.id = id; }
 
-	public void setAssinatura(Assinatura assinatura) {
-		this.assinatura = assinatura;
-	}
+  public String getName() { return name; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setName(String name) { this.name = name; }
 
-	public List<AnuncioModel> getAnuncio() {
-		return anuncio;
-	}
+  public String getEmail() { return email; }
 
-	public void setAnuncio(List<AnuncioModel> anuncio) {
-		this.anuncio = anuncio;
-	}
+  public void setEmail(String email) { this.email = email; }
 
-	public List<EnderecoModel> getEndereco() {
-		return endereco;
-	}
+  public List<RoleModel> getRoles() { return roles; }
 
-	public void setEndereco(List<EnderecoModel> endereco) {
-		this.endereco = endereco;
-	}
-	
+  public void setRoles(List<RoleModel> roles) { this.roles = roles; }
+
+  public void setPassword(String password) { this.password = password; }
+
+  public Boolean getIsConfirmed() { return this.isConfirmed; }
+
+  public void setIsConfirmed(Boolean isConfirmed) {
+    this.isConfirmed = isConfirmed;
+  }
+
+  public Assinatura getAssinatura() { return assinatura; }
+
+  public void setAssinatura(Assinatura assinatura) {
+    this.assinatura = assinatura;
+  }
+
+  public static long getSerialversionuid() { return serialVersionUID; }
+
+  public List<AnuncioModel> getAnuncio() { return anuncio; }
+
+  public void setAnuncio(List<AnuncioModel> anuncio) { this.anuncio = anuncio; }
+
+  public List<EnderecoModel> getEndereco() { return endereco; }
+
+  public void setEndereco(List<EnderecoModel> endereco) {
+    this.endereco = endereco;
+  }
 }
