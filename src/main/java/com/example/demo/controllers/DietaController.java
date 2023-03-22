@@ -17,23 +17,28 @@ public class DietaController {
     return "/dietas";
   }
 
-  @GetMapping({"/newDiet", "/editDiet"})
+  @GetMapping("/newDiet")
   public String escreverDietaView() {
     return "/escrever_dieta";
   }
 
   @PostMapping("/newDiet")
   public String criarDieta(@RequestParam("name") String name,
-                           @RequestParam("content") String content) {
-    dDao.criarDieta(name, content);
+                           @RequestParam("diet") String diet) {
+    dDao.criarDieta(name, diet);
     return "/dietas";
+  }
+
+  @GetMapping("/editDiet")
+  public String editarDietaView() {
+    return "/editar_dieta";
   }
 
   @PostMapping("/editDiet")
   public String editarDieta(@RequestParam("id") Long id,
                             @RequestParam("name") String name,
-                            @RequestParam("content") String content) {
-    dDao.editarDieta(id, name, content);
+                            @RequestParam("diet") String diet) {
+    dDao.editarDieta(id, name, diet);
     return "/dietas";
   }
 
