@@ -116,6 +116,7 @@
 						<tr class="text-left">
 							<th>Nome</th>
 							<th>Treino</th>
+							<th>Del</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -124,6 +125,9 @@
 									<a th:href="@{/editarTreino/{id}(id = ${treino.id})}" th:text="${treino.name}"/>
 							</td>
 							<td th:text="${treino.content}"></td>
+							<td>
+									<a th:href="@{/removerTreino/{id}(id = ${treino.id})}">Del</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -140,6 +144,7 @@
 						<tr class="text-left">
 							<th>Nome</th>
 							<th>Refeição</th>
+							<th>Del</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -148,6 +153,9 @@
 									<a th:href="@{/editDiet/{id}(id = ${dieta.id})}" th:text="${dieta.name}" />
 							</td>
 							<td th:text="${dieta.content}"></td>
+							<td>
+									<a th:href="@{/removeDiet/{id}(id = ${dieta.id})}">Del</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
