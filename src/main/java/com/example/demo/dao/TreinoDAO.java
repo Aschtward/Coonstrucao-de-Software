@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TreinoDAO {
-  @Autowired TreinoRepository tRepo;
-  @Autowired ClientDAO cDao;
+  @Autowired
+  TreinoRepository tRepo;
+  @Autowired
+  ClientDAO cDao;
 
   public void criarTreino(String name, String content) {
     TreinoModel tModel = new TreinoModel();
@@ -28,7 +30,9 @@ public class TreinoDAO {
     }
   }
 
-  public TreinoModel getTreino(Long id) { return tRepo.getReferenceById(id); }
+  public TreinoModel getTreino(Long id) {
+    return tRepo.getReferenceById(id);
+  }
 
   public void editarTreino(Long id, String name, String content) {
     TreinoModel tModel = getTreino(id);
@@ -37,5 +41,10 @@ public class TreinoDAO {
     tRepo.save(tModel);
   }
 
-  public void removerTreino(Long id) { tRepo.delete(getTreino(id)); }
+  public void removerTreino(Long id) {
+    ClienteModels cModel = cDao.buscarSessaoCliente();
+    cModel.getTreinoModels().remove(getTreino(id));
+    cDao.salvarCliente(cModel);
+    tRepo.delete(getTreino(id));
+  }
 }

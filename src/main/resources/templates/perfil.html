@@ -119,8 +119,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="treino : ${cliente.treinoModels}">
-							<td th:text="${treino.name}"></td>
+						<tr class="text-left" th:each="treino : ${cliente.treinoModels}">
+							<td>
+									<a th:href="@{/editarTreino/{id}(id = ${treino.id})}" th:text="${treino.name}"/>
+							</td>
 							<td th:text="${treino.content}"></td>
 						</tr>
 					</tbody>
@@ -141,8 +143,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="dieta : ${cliente.dietaModels}">
-							<td th:text="${dieta.name}"></td>
+						<tr class="text-left" th:each="dieta : ${cliente.dietaModels}">
+							<td>
+									<a th:href="@{/editDiet/{id}(id = ${dieta.id})}" th:text="${dieta.name}" />
+							</td>
 							<td th:text="${dieta.content}"></td>
 						</tr>
 					</tbody>
