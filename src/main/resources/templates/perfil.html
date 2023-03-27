@@ -91,16 +91,16 @@
 				</thead>
 				<tbody>
 					<tr th:each="venda : ${compras}">
-						<td><img th:src="'img/prodImages/' + ${venda.anuncio.image}+'.jpg'"
+						<td><img th:src="'img/prodimages/' + ${venda.anuncio.image}+'.jpg'"
 								style="width:100px;height:100px;object-fit:contain;"></td>
 						<td th:text="${venda.vendedor.name}"></td>
 						<td th:text="${venda.anuncio.name}"></td>
 						<td th:text="${venda.quantidade}"></td>
 						<td th:text="${venda.total}"></td>
-						<td><button th:if="!${venda.foiAvaliado}" type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#avaliacaoModal"
-								th:onclick="mudaDadosAvaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">Avaliar
-								Produto</button><spam class="text-muted" th:if="${venda.foiAvaliado}">Você já avaliou este produto.</spam></td>
+						<td><button th:if="!${venda.foiavaliado}" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#avaliacaomodal"
+								th:onclick="mudadadosavaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">avaliar
+								produto</button><spam class="text-muted" th:if="${venda.foiavaliado}">você já avaliou este produto.</spam></td>
 					</tr>
 				</tbody>
 			</table>
@@ -111,6 +111,20 @@
 				<form th:action="@{/criarTreino}" method="get">
 					<button class="btn btn-primary btn-lg" type="submit">Novo Treino</button>
 				</form>
+					<table class="table table-bordered table-striped table-hover table-sm"> 
+					<thead>
+						<tr class="text-left">
+							<th>Nome</th>
+							<th>Treino</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="treino : ${cliente.treinoModels}">
+							<td th:text="${treino.name}"></td>
+							<td th:text="${treino.content}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		
@@ -119,6 +133,20 @@
 				<form th:action="@{/newDiet}" method="get">
 					<button class="btn btn-primary btn-lg" type="submit">Nova Refeição</button>
 				</form>
+				<table class="table table-bordered table-striped table-hover table-sm"> 
+					<thead>
+						<tr class="text-left">
+							<th>Nome</th>
+							<th>Refeição</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="dieta : ${cliente.dietaModels}">
+							<td th:text="${dieta.name}"></td>
+							<td th:text="${dieta.content}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
