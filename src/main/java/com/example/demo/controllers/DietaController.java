@@ -7,26 +7,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class DietaController {
   @Autowired DietaDAO dDao;
 
   @GetMapping("/newDiet")
-  public String dietaView() {
-    return "/dietas";
-  }
-
-  @GetMapping("/newDiet")
   public String escreverDietaView() {
-    return "/escrever_dieta";
+    return "/criar_dieta";
   }
 
   @PostMapping("/newDiet")
-  public String criarDieta(@RequestParam("name") String name,
-                           @RequestParam("diet") String diet) {
+  public RedirectView criarDieta(@RequestParam("name") String name,
+                                 @RequestParam("diet") String diet) {
     dDao.criarDieta(name, diet);
-    return "/dietas";
+    return new RedirectView("perfil");
   }
 
   @GetMapping("/editDiet")
@@ -35,16 +31,16 @@ public class DietaController {
   }
 
   @PostMapping("/editDiet")
-  public String editarDieta(@RequestParam("id") Long id,
-                            @RequestParam("name") String name,
-                            @RequestParam("diet") String diet) {
+  public RedirectView editarDieta(@RequestParam("id") Long id,
+                                  @RequestParam("name") String name,
+                                  @RequestParam("diet") String diet) {
     dDao.editarDieta(id, name, diet);
-    return "/dietas";
+    return new RedirectView("perfil");
   }
 
   @RequestMapping("/removeDiet")
-  public String removerDieta(@RequestParam("id") Long id) {
+  public RedirectView removerDieta(@RequestParam("id") Long id) {
     dDao.removerDieta(id);
-    return "/dietas";
+    return new RedirectView("perfil");
   }
 }

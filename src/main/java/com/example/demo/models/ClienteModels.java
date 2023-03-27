@@ -65,6 +65,24 @@ public class ClienteModels implements UserDetails {
              inverseJoinColumns = @JoinColumn(name = "dieta_id"))
   private List<DietaModel> dietaModels;
 
+  public List<DietaModel> getDietaModels() { return dietaModels; }
+
+  public void setDietaModels(List<DietaModel> dietaModels) {
+    this.dietaModels = dietaModels;
+  }
+
+  @OneToMany
+  @JoinTable(name = "TB_CLIENTE_TREINO",
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "treino_id"))
+  private List<TreinoModel> treinoModels;
+
+  public List<TreinoModel> getTreinoModels() { return treinoModels; }
+
+  public void setTreinoModels(List<TreinoModel> treinoModels) {
+    this.treinoModels = treinoModels;
+  }
+
   public ClienteModels(@NotBlank String email, @NotBlank String password,
                        @NotBlank String name, Boolean isConfirmed,
                        List<RoleModel> roles) {

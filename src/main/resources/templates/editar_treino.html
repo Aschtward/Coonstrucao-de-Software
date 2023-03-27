@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head> </head>
   <body>
-    <h1>Descreva a sua dieta:</h1>
-    <form th:action="@{/newDiet}" method="post">
-      <label for="name">Nome:</label><br />
+    <h1>Como é o seu treino?</h1>
+    <form th:action="@{/editarTreino}" method="post">
+      <label for="name">Nome</label><br />
       <input type="text" id="name" name="name" size="50" /><br /><br />
-      <label for="diet">Dieta:</label><br />
-      <textarea id="diet" name="diet" cols="80" rows="10"></textarea
+      <label for="content">Treino</label><br />
+      <textarea id="content" name="content" cols="80" rows="10"></textarea
       ><br /><br />
       <input type="submit" value="Enviar" />
     </form>

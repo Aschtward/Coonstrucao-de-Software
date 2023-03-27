@@ -30,15 +30,15 @@
 				aria-selected="false">Historico de compras</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+			<a class="nav-link" id="treino-tab" data-toggle="tab" href="#treino" role="tab" aria-controls="treino"
 				aria-selected="false">Treino</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+			<a class="nav-link" id="dieta-tab" data-toggle="tab" href="#dieta" role="tab" aria-controls="dieta"
 				aria-selected="false">Dieta</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#endereco" role="tab" aria-controls="contact"
+			<a class="nav-link" id="endereco-tab" data-toggle="tab" href="#endereco" role="tab" aria-controls="endereco"
 				aria-selected="false">Endereço</a>
 		</li>
 	</ul>
@@ -105,7 +105,23 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+
+		<div class="tab-pane fade d-flex justify-content-center" id="treino" role="tabpanel" aria-labelledby="treino-tab">
+			<div class="text-right form-group">
+				<form th:action="@{/criarTreino}" method="get">
+					<button class="btn btn-primary btn-lg" type="submit">Novo Treino</button>
+				</form>
+			</div>
+		</div>
+		
+		<div class="tab-pane fade d-flex justify-content-center" id="dieta" role="tabpanel" aria-labelledby="dieta-tab">
+			<div class="text-right form-group">
+				<form th:action="@{/newDiet}" method="get">
+					<button class="btn btn-primary btn-lg" type="submit">Nova Refeição</button>
+				</form>
+			</div>
+		</div>
+
 		<div class="tab-pane fade d-flex justify-content-center" id="endereco" role="tabpanel"
 			aria-labelledby="endereco-tab">
 			<div class="row">

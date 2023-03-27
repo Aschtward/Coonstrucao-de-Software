@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-	<h1>Descreva a sua dieta:</h1>
-		<form th:action="@{/editDiet}" method="post">
-			<label for="name">Nome:</label><br>
-			<input type="text" id="name" name="name" size="50"><br><br>
-			<label for="diet">Dieta:</label><br>
-			<textarea id="diet" name="diet" cols="80" rows="10"></textarea><br><br>
-			<input type="submit" value="Enviar">
-		</form>
-	</body>
+  <head> </head>
+  <body>
+    <h1>Descreva a sua dieta:</h1>
+    <form th:action="@{/editDiet}" method="post">
+      <label for="name">Nome:</label><br />
+      <input type="text" id="name" name="name" size="50" /><br /><br />
+      <label for="diet">Dieta:</label><br />
+      <textarea id="diet" name="diet" cols="80" rows="10"></textarea
+      ><br /><br />
+      <input type="submit" value="Enviar" />
+    </form>
+    <form th:action="@{/}" method="get">
+      <button name="retornar" value="return">Retornar</button>
+    </form>
+  </body>
 </html>
