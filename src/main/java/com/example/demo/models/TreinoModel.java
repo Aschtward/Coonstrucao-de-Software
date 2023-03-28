@@ -1,34 +1,29 @@
 package com.example.demo.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "TB_TREINOS")
 public class TreinoModel {
   @Id @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
 
-  @OneToMany
-  @JoinTable(name = "TB_TREINO_EXERCICIO")
-  private List<ExercicioModel> eModels;
+  @NotBlank @Column private String name;
+
+  @NotBlank @Column private String content;
 
   public Long getId() { return id; }
 
-  public List<ExercicioModel> getExercicios() { return eModels; }
+  public String getName() { return name; }
 
-  public void setExercicios(List<ExercicioModel> eModels) {
-    this.eModels = eModels;
-  }
+  public void setName(String name) { this.name = name; }
 
-  public ExercicioModel getExercicio(int index) { return eModels.get(index); }
+  public String getContent() { return content; }
 
-  public void addExercicio(ExercicioModel eModel) { eModels.add(eModel); }
-
-  public void removeExercicio(ExercicioModel eModel) { eModels.remove(eModel); }
+  public void setContent(String content) { this.content = content; }
 }

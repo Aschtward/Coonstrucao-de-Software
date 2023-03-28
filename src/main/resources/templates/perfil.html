@@ -30,15 +30,15 @@
 				aria-selected="false">Historico de compras</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+			<a class="nav-link" id="treino-tab" data-toggle="tab" href="#treino" role="tab" aria-controls="treino"
 				aria-selected="false">Treino</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+			<a class="nav-link" id="dieta-tab" data-toggle="tab" href="#dieta" role="tab" aria-controls="dieta"
 				aria-selected="false">Dieta</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#endereco" role="tab" aria-controls="contact"
+			<a class="nav-link" id="endereco-tab" data-toggle="tab" href="#endereco" role="tab" aria-controls="endereco"
 				aria-selected="false">Endereço</a>
 		</li>
 	</ul>
@@ -91,21 +91,77 @@
 				</thead>
 				<tbody>
 					<tr th:each="venda : ${compras}">
-						<td><img th:src="'img/prodImages/' + ${venda.anuncio.image}+'.jpg'"
+						<td><img th:src="'img/prodimages/' + ${venda.anuncio.image}+'.jpg'"
 								style="width:100px;height:100px;object-fit:contain;"></td>
 						<td th:text="${venda.vendedor.name}"></td>
 						<td th:text="${venda.anuncio.name}"></td>
 						<td th:text="${venda.quantidade}"></td>
 						<td th:text="${venda.total}"></td>
-						<td><button th:if="!${venda.foiAvaliado}" type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#avaliacaoModal"
-								th:onclick="mudaDadosAvaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">Avaliar
-								Produto</button><spam class="text-muted" th:if="${venda.foiAvaliado}">Você já avaliou este produto.</spam></td>
+						<td><button th:if="!${venda.foiavaliado}" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#avaliacaomodal"
+								th:onclick="mudadadosavaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">avaliar
+								produto</button><spam class="text-muted" th:if="${venda.foiavaliado}">você já avaliou este produto.</spam></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+
+		<div class="tab-pane fade d-flex justify-content-center" id="treino" role="tabpanel" aria-labelledby="treino-tab">
+			<div class="text-right form-group">
+				<form th:action="@{/criarTreino}" method="get">
+					<button class="btn btn-primary btn-lg" type="submit">Novo Treino</button>
+				</form>
+					<table class="table table-bordered table-striped table-hover table-sm"> 
+					<thead>
+						<tr class="text-left">
+							<th>Nome</th>
+							<th>Treino</th>
+							<th>Del</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="text-left" th:each="treino : ${cliente.treinoModels}">
+							<td>
+									<a th:href="@{/editarTreino/{id}(id = ${treino.id})}" th:text="${treino.name}"/>
+							</td>
+							<td th:text="${treino.content}"></td>
+							<td>
+									<a th:href="@{/removerTreino/{id}(id = ${treino.id})}">Del</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="tab-pane fade d-flex justify-content-center" id="dieta" role="tabpanel" aria-labelledby="dieta-tab">
+			<div class="text-right form-group">
+				<form th:action="@{/newDiet}" method="get">
+					<button class="btn btn-primary btn-lg" type="submit">Nova Refeição</button>
+				</form>
+				<table class="table table-bordered table-striped table-hover table-sm"> 
+					<thead>
+						<tr class="text-left">
+							<th>Nome</th>
+							<th>Refeição</th>
+							<th>Del</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="text-left" th:each="dieta : ${cliente.dietaModels}">
+							<td>
+									<a th:href="@{/editDiet/{id}(id = ${dieta.id})}" th:text="${dieta.name}" />
+							</td>
+							<td th:text="${dieta.content}"></td>
+							<td>
+									<a th:href="@{/removeDiet/{id}(id = ${dieta.id})}">Del</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
 		<div class="tab-pane fade d-flex justify-content-center" id="endereco" role="tabpanel"
 			aria-labelledby="endereco-tab">
 			<div class="row">

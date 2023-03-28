@@ -2,21 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head> </head>
   <body>
-    <h1>Descreva a sua dieta:</h1>
-    <form th:action="@{/editDiet/{id}(id = ${dieta.id})}" method="post">
+    <h1>Como é o seu treino?</h1>
+    <form th:action="@{/editarTreino/{id}(id = ${treino.id})}" method="post">
       <label for="name">Nome:</label><br />
       <input
         type="text"
         id="name"
         name="name"
-        th:value="${dieta.name}"
+        th:value="${treino.name}"
         size="50"
       /><br /><br />
-      <label for="diet">Dieta:</label><br />
+      <label for="content">Treino:</label><br />
       <textarea
-        id="diet"
-        name="diet"
-        th:text="${dieta.content}"
+        id="content"
+        name="content"
+        th:text="${treino.content}"
         cols="80"
         rows="10"
       ></textarea
