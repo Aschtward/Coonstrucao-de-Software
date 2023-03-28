@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DietaDAO {
-  @Autowired
-  DietaRepository dRepo;
-  @Autowired
-  ClientDAO cDao;
+  @Autowired DietaRepository dRepo;
+  @Autowired ClientDAO cDao;
 
   public void criarDieta(String nome, String content) {
     DietaModel dModel = new DietaModel();
@@ -20,7 +18,7 @@ public class DietaDAO {
     dModel.setContent(content);
     dRepo.save(dModel);
     ClienteModels cModel = cDao.buscarSessaoCliente();
-    if (cModel.getTreinoModels() != null) {
+    if (cModel.getDietaModels() != null) {
       cModel.getDietaModels().add(dModel);
       cDao.salvarCliente(cModel);
     } else {
@@ -30,9 +28,7 @@ public class DietaDAO {
     }
   }
 
-  public DietaModel getDieta(Long id) {
-    return dRepo.getReferenceById(id);
-  }
+  public DietaModel getDieta(Long id) { return dRepo.getReferenceById(id); }
 
   public void editarDieta(Long id, String name, String content) {
     DietaModel dModel = getDieta(id);
