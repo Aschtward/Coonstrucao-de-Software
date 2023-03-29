@@ -133,11 +133,8 @@ public class ClientDAO {
 		return false;
 	}
 
-<<<<<<< HEAD
-
-=======
 	public void excluirConta() {
 		clientRepo.delete(buscarSessaoCliente());
 	}
->>>>>>> bc7665c5c17266c16d477949d5c9e1de6fb077e6
+
 }
