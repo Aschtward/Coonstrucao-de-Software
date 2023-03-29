@@ -8,6 +8,7 @@
       <input
         type="text"
         id="name"
+        required
         name="name"
         th:value="${dieta.name}"
         size="50"
@@ -16,6 +17,7 @@
       <textarea
         id="diet"
         name="diet"
+        required
         th:text="${dieta.content}"
         cols="80"
         rows="10"
