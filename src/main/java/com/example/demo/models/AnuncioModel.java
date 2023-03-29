@@ -20,11 +20,9 @@ public class AnuncioModel {
 	@Id
 	@GeneratedValue(strategy  = GenerationType.AUTO)
 	private Long id;
-	@NotBlank
 	@Column
 	private String name;
 	@Column
-	@NotNull
 	private BigDecimal preco;
 	@Column
 	private String image;

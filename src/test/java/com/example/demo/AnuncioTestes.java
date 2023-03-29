@@ -17,9 +17,9 @@ public class AnuncioTestes {
 	@Autowired
 	private AnuncioRepository anuncioTeste;
 	
-	 
 	@Test
 	public void deveRetornarAnunciosParaPesquisa() throws Exception {
+
 		//dado
 		AnuncioModel anuncio = new AnuncioModel();
 		anuncio.setName("Nome de teste");
@@ -44,4 +44,5 @@ public class AnuncioTestes {
 		assert(anuncioTeste.findByNameContaining("teste").contains(anuncio));
 		assert(!anuncioTeste.findByNameContaining("teste").contains(anuncio2));
 	}
+	
 }

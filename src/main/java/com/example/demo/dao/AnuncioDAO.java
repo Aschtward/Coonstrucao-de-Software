@@ -108,7 +108,6 @@ public class AnuncioDAO {
 			novaAvaliacao.setNota(Integer.parseInt(nota));
 			novaAvaliacao.setAvaliacao(avaliacao);
 			anuncio.get().getAvaliacao().add(novaAvaliacao);
-			System.out.println("oxi");
 			int notaTotal = 0;
 			for (AvaliacaoModel ava : anuncio.get().getAvaliacao()) {
 				notaTotal += ava.getNota();
@@ -149,5 +148,20 @@ public class AnuncioDAO {
 		}
 		return false;
 
+	}
+
+	public void excluirProduto(String id) {
+		Optional<AnuncioModel> anuncio = anuncioRepo.findById(Long.parseLong(id));
+		if (anuncio.isPresent()) {
+			List<ProdutoCompradoModel> compras = compraRepository.findByAnuncio(anuncio.get());
+			compraRepository.deleteAll(compras);
+			ClienteModels cliente = cDao.buscarSessaoCliente();
+			if(cliente.getAnuncio().contains(anuncio.get())) {
+				cliente.getAnuncio().remove(anuncio.get());
+				cDao.salvarCliente(cliente);
+				anuncioRepo.delete(anuncio.get());
+			}
+		}
+		
 	}
 }

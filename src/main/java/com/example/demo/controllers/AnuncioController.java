@@ -47,6 +47,13 @@ public class AnuncioController {
 		return new RedirectView("/perfil");
 	}
 	
+	@PostMapping("/excluir")
+	public RedirectView excluirProduto(@RequestParam String id) {
+		anuncioDao.excluirProduto(id);
+		return new RedirectView("/anunciante");
+	}
+	
+	
 	@GetMapping("/")
 	public ModelAndView exibirTodosAnuncios() {
 		List<AnuncioModel> anuncios = anuncioDao.exibirTodos();

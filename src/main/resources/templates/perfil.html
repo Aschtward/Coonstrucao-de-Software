@@ -30,11 +30,19 @@
 				aria-selected="false">Historico de compras</a>
 		</li>
 		<li class="nav-item">
+<<<<<<< HEAD
+			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#treino" role="tab" aria-controls="contact"
+				aria-selected="false">Treino</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#dieta" role="tab" aria-controls="dieta"
+=======
 			<a class="nav-link" id="treino-tab" data-toggle="tab" href="#treino" role="tab" aria-controls="treino"
 				aria-selected="false">Treino</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" id="dieta-tab" data-toggle="tab" href="#dieta" role="tab" aria-controls="dieta"
+>>>>>>> bc7665c5c17266c16d477949d5c9e1de6fb077e6
 				aria-selected="false">Dieta</a>
 		</li>
 		<li class="nav-item">
@@ -97,14 +105,36 @@
 						<td th:text="${venda.anuncio.name}"></td>
 						<td th:text="${venda.quantidade}"></td>
 						<td th:text="${venda.total}"></td>
+<<<<<<< HEAD
+						<td><button th:if="!${venda.foiAvaliado}" type="button" class="btn btn-primary"
+								data-toggle="modal" data-target="#avaliacaoModal"
+								th:onclick="mudaDadosAvaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">Avaliar
+								Produto</button>
+							<spam class="text-muted" th:if="${venda.foiAvaliado}">Você já avaliou este produto.</spam>
+						</td>
+=======
 						<td><button th:if="!${venda.foiavaliado}" type="button" class="btn btn-primary" data-toggle="modal"
 								data-target="#avaliacaomodal"
 								th:onclick="mudadadosavaliacao([[${venda.anuncio.name}]],[[${venda.anuncio.id}]],[[${venda.anuncio.image}]],[[${venda.id}]])">avaliar
 								produto</button><spam class="text-muted" th:if="${venda.foiavaliado}">você já avaliou este produto.</spam></td>
+>>>>>>> bc7665c5c17266c16d477949d5c9e1de6fb077e6
 					</tr>
 				</tbody>
 			</table>
 		</div>
+<<<<<<< HEAD
+		<div class="tab-pane fade" id="dieta" role="tabpanel" aria-labelledby="dieta-tab">
+			<div class="container">
+				<h1>Hello</h1>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="treino" role="tabpanel" aria-labelledby="dieta-tab">
+			<div class="container" style="height:max-content;">
+				<h1>Hello treino </h1>
+			</div>
+		</div>
+		<div class="tab-pane fade sho-active d-flex justify-content-center" id="endereco" role="tabpanel"
+=======
 
 		<div class="tab-pane fade d-flex justify-content-center" id="treino" role="tabpanel" aria-labelledby="treino-tab">
 			<div class="text-right form-group">
@@ -163,6 +193,7 @@
 		</div>
 
 		<div class="tab-pane fade d-flex justify-content-center" id="endereco" role="tabpanel"
+>>>>>>> bc7665c5c17266c16d477949d5c9e1de6fb077e6
 			aria-labelledby="endereco-tab">
 			<div class="row">
 				<div class="col-12 mt-3">
@@ -252,7 +283,8 @@
 								</div>
 								<div class="form-group">
 									<label class="col-form-label" for="avaliacao">Conte-nos mais</label>
-									<textarea class="form-control" type="text" id = "avaliacao" name="avaliacao" required></textarea>
+									<textarea class="form-control" type="text" id="avaliacao" name="avaliacao"
+										required></textarea>
 									<input id="id-produto" name="id" type="text" hidden>
 									<input id="id-compra" name="idCompra" type="text" hidden>
 								</div>

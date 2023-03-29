@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "D:/JS"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"stdio.h": "c"
+		}
+	}
+}
