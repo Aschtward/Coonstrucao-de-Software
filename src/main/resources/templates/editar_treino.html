@@ -9,6 +9,7 @@
         type="text"
         id="name"
         name="name"
+        required
         th:value="${treino.name}"
         size="50"
       /><br /><br />
@@ -16,6 +17,7 @@
       <textarea
         id="content"
         name="content"
+        required
         th:text="${treino.content}"
         cols="80"
         rows="10"
